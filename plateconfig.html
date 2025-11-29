@@ -294,6 +294,9 @@
 											<input type="button" class="form-control" id="btnCopyLink" placeholder="" value="Copy">
 										</div>
 									</div>
+									<button type="button" id="btnSendToShopify" class="btn btn-primary mt-2">
+									  Send to cart
+									</button>
 								</div>
 							</div>
 						</div>
@@ -548,6 +551,46 @@ Final artwork will be shared for approval</p>
 		toggle.checked = true;
 	  }
 	}
+
+function sendToShopify() {
+  // Gather all design values exactly the same way your buildOutputText() does
+  const style = document.querySelector('input[name="style"]:checked')?.value || '';
+  const mainText = document.getElementById("mainText").value || '';
+  const bottomText = document.getElementById("bottomText").value || '';
+  const textColor = document.getElementById("textColor").value || '';
+  const bgColor = document.getElementById("bgColor").value || '';
+  const holesToggle = document.getElementById("holesToggle").checked ? "1" : "0";
+
+  let link = '';
+  if (typeof buildOutputText === "function") {
+    link = document.getElementById("output-text").value || '';
+  }
+
+  const config = {
+    style,
+    mainText,
+    bottomText,
+    textColor,
+    bgColor,
+    holes: holesToggle,
+    link
+  };
+
+  // Post message to Shopify iframe parent
+  if (window.parent && window.parent !== window) {
+    window.parent.postMessage({ source: 'platemate', config }, '*');
+  } else {
+    alert('Not inside Shopify iframe — can’t send to cart.');
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  const sendBtn = document.getElementById("btnSendToShopify");
+  if (sendBtn) {
+    sendBtn.addEventListener("click", sendToShopify);
+  }
+});
+		
   </script>
 </body>
 </html>
