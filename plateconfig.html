@@ -86,12 +86,50 @@
 	  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
 	}
   </style>
+	
 	<style>
 	  body.preview-mode {
 	    background: #ffffff;
 	  }
 	</style>
 
+  <style>
+    /* Cleaner look when embedded on Shopify product page */
+    body.embed-mode {
+      background: transparent;
+    }
+
+    body.embed-mode .header-container,
+    body.embed-mode .footer-wrapper,
+    body.embed-mode .footer-section {
+      display: none !important;
+    }
+
+    body.embed-mode .top-margin {
+      margin-top: 0 !important;
+    }
+
+    body.embed-mode .layout-px-spacing {
+      min-height: auto !important;
+      padding-top: 0 !important;
+    }
+
+    body.embed-mode .main-container {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    body.embed-mode .card {
+      box-shadow: none !important;
+      border: none !important;
+    }
+
+    body.embed-mode .plate-wrapper {
+      box-shadow: none !important;
+      background: transparent !important;
+      padding: 0 !important;
+    }
+  </style>
 	
 </head>
 <body class="layout-boxed" id="pagebody">
@@ -592,18 +630,23 @@ function sendToShopify() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  let isPreview = false;
-
-  // Check for ?preview=true
+  // PREVIEW / EMBED MODE CHECK
   try {
     const url = new URL(window.location.href);
     if (url.searchParams.get("preview") === "true") {
-      isPreview = true;
       document.body.classList.add("preview-mode");
     }
-  } catch (e) {
-    // ignore
+    if (url.searchParams.get("embed") === "shopify") {
+      document.body.classList.add("embed-mode");
+    }
+  } catch(e) {}
+
+  const sendBtn = document.getElementById("btnSendToShopify");
+  if (sendBtn) {
+    sendBtn.addEventListener("click", sendToShopify);
   }
+});
+
 
   if (isPreview) {
     // At this point, your other code (loadFromQueryParams + switchStyle)
