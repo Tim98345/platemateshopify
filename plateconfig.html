@@ -616,19 +616,55 @@ function sendToShopify() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  // PREVIEW MODE CHECK
+  let isPreview = false;
+
+  // Check for ?preview=true
   try {
     const url = new URL(window.location.href);
     if (url.searchParams.get("preview") === "true") {
+      isPreview = true;
       document.body.classList.add("preview-mode");
     }
-  } catch(e) {}
+  } catch (e) {
+    // ignore
+  }
 
+  if (isPreview) {
+    // At this point, your other code (loadFromQueryParams + switchStyle)
+    // has already run and chosen the correct SVG style & colours.
+
+    const plateWrapper = document.querySelector(".plate-wrapper");
+    if (plateWrapper) {
+      // Clone the current preview
+      const clone = plateWrapper.cloneNode(true);
+
+      // Nuke the whole page body and replace with just the plate preview
+      document.body.innerHTML = "";
+      document.body.style.margin = "0";
+      document.body.style.padding = "0";
+      document.body.style.background = "#ffffff";
+
+      const outer = document.createElement("div");
+      outer.style.display = "flex";
+      outer.style.alignItems = "center";
+      outer.style.justifyContent = "center";
+      outer.style.height = "100vh";
+      outer.appendChild(clone);
+
+      document.body.appendChild(outer);
+    }
+
+    // In preview mode we don't need "Send to cart" button.
+    return;
+  }
+
+  // Normal (non-preview) mode: keep Shopify button working
   const sendBtn = document.getElementById("btnSendToShopify");
   if (sendBtn) {
     sendBtn.addEventListener("click", sendToShopify);
   }
 });
+
 
 		
   </script>
