@@ -553,8 +553,10 @@ Final artwork will be shared for approval</p>
 
     document.getElementById("largeSide2lineBottom").textContent = bottomVal.substring(3);
     document.getElementById("largeSide2lineBottom").setAttribute("fill", color);
-  }
 
+	sendHeightToParent();
+  }
+		
   function switchStyle() {
     const selected = document.querySelector('input[name="style"]:checked').value;
     ['euro', 'small', 'largeSide', 'largeBottom', 'largeSide2line'].forEach(id => {
@@ -603,6 +605,24 @@ Final artwork will be shared for approval</p>
     }
   }
 
+function sendHeightToParent() {
+    const preview = isPreviewMode();
+    const inIframe = window.parent && window.parent !== window;
+
+    if (!inIframe || preview) return; // don't mess with cart preview iframe
+
+    const height = document.documentElement.scrollHeight || document.body.scrollHeight || 600;
+
+    window.parent.postMessage(
+      {
+        source: 'platemate',
+        type: 'resize',
+        height: height
+      },
+      '*'
+    );
+  }
+		
   document.getElementById("btnCopyLink").addEventListener("click", () => {
     const output = document.getElementById("output-text");
     output.select();
@@ -621,7 +641,10 @@ Final artwork will be shared for approval</p>
     // Apply URL params and get the plate into the right state
     loadFromQueryParams();
     switchStyle(); // calls update()
-
+    // Initial size sync when embedded on product page
+    sendHeightToParent();
+    window.addEventListener('resize', sendHeightToParent);
+	  
     const preview = isPreviewMode();
     const inIframe = window.parent && window.parent !== window;
 
