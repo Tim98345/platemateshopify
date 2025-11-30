@@ -589,12 +589,19 @@ Final artwork will be shared for approval</p>
       link: link
     };
 
-    if (window.parent && window.parent !== window) {
-      window.parent.postMessage({ source: 'platemate', config }, '*');
-    } else {
-      alert('Not inside Shopify iframe — can’t send to cart.');
-    }
-  }
+if (window.parent && window.parent !== window) {
+  window.parent.postMessage(
+    {
+      source: 'platemate-v2',
+      type: 'config',
+      config
+    },
+    '*'
+  );
+} else {
+  alert('Not inside Shopify iframe — can’t send to cart.');
+}
+
 
   function isPreviewMode() {
     try {
