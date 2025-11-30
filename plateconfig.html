@@ -91,6 +91,36 @@
 	    background: #ffffff;
 	  }
 	</style>
+<style>
+  /* When builder is embedded in Shopify product page iframe */
+  body.embedded-mode {
+    background: transparent;
+  }
+
+  body.embedded-mode .header-container,
+  body.embedded-mode .footer-section,
+  body.embedded-mode .footer-wrapper {
+    display: none !important; /* Hide the builder's own header/footer */
+  }
+
+  body.embedded-mode .main-container {
+    margin: 0;
+  }
+
+  body.embedded-mode .top-margin {
+    margin-top: 10px !important; /* Reduce big top spacing */
+  }
+
+  body.embedded-mode .layout-px-spacing {
+    min-height: auto !important;
+  }
+
+  body.embedded-mode .plate-wrapper {
+    box-shadow: none;
+    background: transparent;
+    padding: 10px 0;
+  }
+</style>
 
 	
 </head>
@@ -593,7 +623,9 @@ Final artwork will be shared for approval</p>
     switchStyle(); // calls update()
 
     const preview = isPreviewMode();
+    const inIframe = window.parent && window.parent !== window;
 
+    // --- PREVIEW MODE (used in cart iframe with ?preview=true) ---
     if (preview) {
       const plateWrapper = document.querySelector(".plate-wrapper");
       if (plateWrapper) {
@@ -617,7 +649,23 @@ Final artwork will be shared for approval</p>
       return;
     }
 
-    // Normal builder mode
+    // --- EMBEDDED MODE (product page iframe, NOT preview) ---
+    if (inIframe) {
+      document.body.classList.add("embedded-mode");
+
+      // Optional: hide the "Link to design / Copy link" inputs in product-page embed
+      const linkInput = document.getElementById("output-text");
+      if (linkInput) {
+        const linkRow = linkInput.closest(".row");
+        if (linkRow) {
+          // Hide just the two columns, keep the Add to Cart button visible
+          const cols = linkRow.querySelectorAll(".col-md-8, .col-md-4");
+          cols.forEach(col => col.style.display = "none");
+        }
+      }
+    }
+
+    // Normal builder mode (standalone page or embedded iframe)
     const sendBtn = document.getElementById("btnSendToShopify");
     if (sendBtn) {
       sendBtn.addEventListener("click", sendToShopify);
@@ -634,6 +682,7 @@ Final artwork will be shared for approval</p>
       }
     }
   });
+
 </script>
 
 </body>
