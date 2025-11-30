@@ -353,296 +353,288 @@ Final artwork will be shared for approval</p>
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 	<script>
-    const styles = document.getElementsByName("style");
-    const textColor = document.getElementById("textColor");
-    const bgColor = document.getElementById("bgColor");
-    const holesToggle = document.getElementById("holesToggle");
-    const mainText = document.getElementById("mainText");
-    const bottomText = document.getElementById("bottomText");
+  const styles = document.getElementsByName("style");
+  const textColor = document.getElementById("textColor");
+  const bgColor = document.getElementById("bgColor");
+  const holesToggle = document.getElementById("holesToggle");
+  const mainText = document.getElementById("mainText");
+  const bottomText = document.getElementById("bottomText");
 
-	function buildOutputText() {
-	  const style = document.querySelector('input[name="style"]:checked')?.value || '';
-	  const mainText = document.getElementById("mainText").value || '';
-	  const bottomText = document.getElementById("bottomText").value || '';
-	  const textColor = document.getElementById("textColor").value || '';
-	  const bgColor = document.getElementById("bgColor").value || '';
-	  const holesToggle = document.getElementById("holesToggle").checked ? "1" : "0";
+  function buildOutputText() {
+    const style = document.querySelector('input[name="style"]:checked')?.value || '';
+    const mainTextVal = document.getElementById("mainText").value || '';
+    const bottomTextVal = document.getElementById("bottomText").value || '';
+    const textColorVal = document.getElementById("textColor").value || '';
+    const bgColorVal = document.getElementById("bgColor").value || '';
+    const holesToggleVal = document.getElementById("holesToggle").checked ? "1" : "0";
 
-	  const params = new URLSearchParams({
-		style,
-		mainText,
-		bottomText,
-		textColor,
-		bgColor,
-		holes: holesToggle
-	  });
+    const params = new URLSearchParams({
+      style: style,
+      mainText: mainTextVal,
+      bottomText: bottomTextVal,
+      textColor: textColorVal,
+      bgColor: bgColorVal,
+      holes: holesToggleVal
+    });
 
-	  return `${location.origin}${location.pathname}?${params.toString()}`;
-	}
-	
-	document.getElementById("btnCopyLink").addEventListener("click", () => {
-	  const output = document.getElementById("output-text");
-	  output.select();
-	  output.setSelectionRange(0, 99999);
-	  document.execCommand("copy");
-	  alert("Link copied to clipboard!");
-	});
-	
-	function loadFromQueryParams() {
-	  const params = new URLSearchParams(window.location.search);
+    return `${location.origin}${location.pathname}?${params.toString()}`;
+  }
 
-	  const style = params.get("style");
-	  if (style) {
-		const radio = document.querySelector(`input[name="style"][value="${style}"]`);
-		if (radio) radio.checked = true;
-	  }
+  function loadFromQueryParams() {
+    const params = new URLSearchParams(window.location.search);
 
-	  const mainText = params.get("mainText");
-	  if (mainText !== null) {
-		document.getElementById("mainText").value = mainText;
-	  }
-
-	  const bottomText = params.get("bottomText");
-	  if (bottomText !== null) {
-		document.getElementById("bottomText").value = bottomText;
-	  }
-
-	  const textColor = params.get("textColor");
-	  if (textColor) {
-		const select = document.getElementById("textColor");
-		if ([...select.options].some(o => o.value === textColor)) {
-		  select.value = textColor;
-		}
-	  }
-
-	  const bgColor = params.get("bgColor");
-	  if (bgColor) {
-		const select = document.getElementById("bgColor");
-		if ([...select.options].some(o => o.value === bgColor)) {
-		  select.value = bgColor;
-		}
-	  }
-
-	  const holes = params.get("holes");
-	  document.getElementById("holesToggle").checked = holes === "1";
-	}
-
-
-
-    function update() {
-      const val = mainText.value.toUpperCase();
-      const bottomVal = bottomText.value.toUpperCase();
-      const color = textColor.value;
-      const bg = bgColor.value;
-      const showHoles = holesToggle.checked;
-	  
-	  document.getElementById("output-text").value = buildOutputText();
-
-      document.getElementById("euroMain").textContent = val;
-      document.getElementById("euroTop").textContent = bottomVal || "VIC";
-      document.getElementById("euroMain").setAttribute("fill", color);
-      document.getElementById("euroTop").setAttribute("fill", color);
-      document.getElementById("euroBorder").setAttribute("fill", bg);
-      document.getElementById("euroBorder").setAttribute("stroke", color);
-      document.querySelectorAll('.euroHole').forEach(e=>e.style.display = showHoles ? "block":"none");
-
-      document.getElementById("smallMain").textContent = val;
-      document.getElementById("smallMain").setAttribute("fill", color);
-      document.getElementById("smallBorder").setAttribute("fill", bg);
-      document.getElementById("smallBorder").setAttribute("stroke", color);
-      document.querySelectorAll('.smallHole').forEach(e=>e.style.display = showHoles ? "block":"none");
-
-      const smallBottom = document.getElementById("smallBottom");
-      smallBottom.innerHTML = "";
-      for (let char of bottomVal) {
-        const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
-        tspan.setAttribute("dx", "1");
-        tspan.setAttribute("fill", color);
-        tspan.textContent = char;
-        smallBottom.appendChild(tspan);
-      }
-
-      const largeSideMain = document.getElementById("largeSideMain");
-      largeSideMain.innerHTML = "";
-      const startX = 95 - ((val.length - 1) * 23 / 2);
-      for (let i = 0; i < val.length; i++) {
-        const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
-        tspan.setAttribute("x", startX + i * 23);
-        tspan.setAttribute("y", "54");
-        tspan.textContent = val[i];
-        largeSideMain.appendChild(tspan);
-      }
-      document.getElementById("largeSideMain").setAttribute("fill", color);
-      document.getElementById("largeSideV").setAttribute("fill", color);
-      document.getElementById("largeSideI").setAttribute("fill", color);
-      document.getElementById("largeSideC").setAttribute("fill", color);
-      document.getElementById("largeSideBorder").setAttribute("fill", bg);
-      document.getElementById("largeSideBorder").setAttribute("stroke", color);
-      document.querySelectorAll('.largeSideHole').forEach(e=>e.style.display = showHoles ? "block":"none");
-
-      const sideLetters = bottomVal.padEnd(3, " ").substring(0,3).toUpperCase();
-      document.getElementById("largeSideV").textContent = sideLetters.charAt(0);
-      document.getElementById("largeSideI").textContent = sideLetters.charAt(1);
-      document.getElementById("largeSideC").textContent = sideLetters.charAt(2);
-
-      const largeBottomMain = document.getElementById("largeBottomMain");
-      largeBottomMain.innerHTML = "";
-      const startBX = 90 - ((val.length - 1) * 17 / 2);
-      for (let i = 0; i < val.length; i++) {
-        const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
-        tspan.setAttribute("x", startBX + i * 17);
-        tspan.setAttribute("y", "42");
-        tspan.textContent = val[i];
-        largeBottomMain.appendChild(tspan);
-      }
-      document.getElementById("largeBottomMain").setAttribute("fill", color);
-      document.getElementById("largeBottomBottom").textContent = bottomVal;
-      document.getElementById("largeBottomBottom").setAttribute("fill", color);
-      document.getElementById("largeBottomBorder").setAttribute("fill", bg);
-      document.getElementById("largeBottomBorder").setAttribute("stroke", color);
-      document.querySelectorAll('.largeBottomHole').forEach(e=>e.style.display = showHoles ? "block":"none");
-
-	// --- Large Side (2 Line) ---
-	const largeSide2lineMain = document.getElementById("largeSide2lineMain");
-	largeSide2lineMain.innerHTML = "";
-	const startX2 = 95 - ((val.length - 1) * 23 / 2);
-	for (let i = 0; i < val.length; i++) {
-	  const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
-	  tspan.setAttribute("x", startX2 + i * 23);
-	  tspan.setAttribute("y", "48");
-	  tspan.textContent = val[i];
-	  largeSide2lineMain.appendChild(tspan);
-	}
-	document.getElementById("largeSide2lineMain").setAttribute("fill", color);
-	document.getElementById("largeSide2lineV").setAttribute("fill", color);
-	document.getElementById("largeSide2lineI").setAttribute("fill", color);
-	document.getElementById("largeSide2lineC").setAttribute("fill", color);
-	document.getElementById("largeSide2lineBorder").setAttribute("fill", bg);
-	document.getElementById("largeSide2lineBorder").setAttribute("stroke", color);
-	document.querySelectorAll('.largeSide2lineHole').forEach(e => e.style.display = showHoles ? "block":"none");
-	
-	const sideLetters2 = bottomVal.padEnd(3, " ").substring(0,3).toUpperCase();
-	document.getElementById("largeSide2lineV").textContent = sideLetters2.charAt(0);
-	document.getElementById("largeSide2lineI").textContent = sideLetters2.charAt(1);
-	document.getElementById("largeSide2lineC").textContent = sideLetters2.charAt(2);
-	
-	document.getElementById("largeSide2lineBottom").textContent = bottomVal.substring(3);
-	document.getElementById("largeSide2lineBottom").setAttribute("fill", color);		
+    const style = params.get("style");
+    if (style) {
+      const radio = document.querySelector(`input[name="style"][value="${style}"]`);
+      if (radio) radio.checked = true;
     }
 
-
-		
-    function switchStyle() {
-      const selected = document.querySelector('input[name="style"]:checked').value;
-      ['euro','small','largeSide','largeBottom','largeSide2line'].forEach(id => {
-        document.getElementById("plate-" + id).classList.remove("active");
-      });
-      document.getElementById("plate-"+selected).classList.add("active");
-      update();
+    const mainTextParam = params.get("mainText");
+    if (mainTextParam !== null) {
+      document.getElementById("mainText").value = mainTextParam;
     }
 
+    const bottomTextParam = params.get("bottomText");
+    if (bottomTextParam !== null) {
+      document.getElementById("bottomText").value = bottomTextParam;
+    }
+
+    const textColorParam = params.get("textColor");
+    if (textColorParam) {
+      const selectText = document.getElementById("textColor");
+      if ([...selectText.options].some(o => o.value === textColorParam)) {
+        selectText.value = textColorParam;
+      }
+    }
+
+    const bgColorParam = params.get("bgColor");
+    if (bgColorParam) {
+      const selectBg = document.getElementById("bgColor");
+      if ([...selectBg.options].some(o => o.value === bgColorParam)) {
+        selectBg.value = bgColorParam;
+      }
+    }
+
+    const holes = params.get("holes");
+    document.getElementById("holesToggle").checked = holes === "1";
+  }
+
+  function update() {
+    const val = mainText.value.toUpperCase();
+    const bottomVal = bottomText.value.toUpperCase();
+    const color = textColor.value;
+    const bg = bgColor.value;
+    const showHoles = holesToggle.checked;
+
+    // keep link up to date
+    document.getElementById("output-text").value = buildOutputText();
+
+    // --- Euro ---
+    document.getElementById("euroMain").textContent = val;
+    document.getElementById("euroTop").textContent = bottomVal || "VIC";
+    document.getElementById("euroMain").setAttribute("fill", color);
+    document.getElementById("euroTop").setAttribute("fill", color);
+    document.getElementById("euroBorder").setAttribute("fill", bg);
+    document.getElementById("euroBorder").setAttribute("stroke", color);
+    document.querySelectorAll('.euroHole').forEach(e => e.style.display = showHoles ? "block" : "none");
+
+    // --- Small plate ---
+    document.getElementById("smallMain").textContent = val;
+    document.getElementById("smallMain").setAttribute("fill", color);
+    document.getElementById("smallBorder").setAttribute("fill", bg);
+    document.getElementById("smallBorder").setAttribute("stroke", color);
+    document.querySelectorAll('.smallHole').forEach(e => e.style.display = showHoles ? "block" : "none");
+
+    const smallBottom = document.getElementById("smallBottom");
+    smallBottom.innerHTML = "";
+    for (let char of bottomVal) {
+      const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+      tspan.setAttribute("dx", "1");
+      tspan.setAttribute("fill", color);
+      tspan.textContent = char;
+      smallBottom.appendChild(tspan);
+    }
+
+    // --- Large side ---
+    const largeSideMain = document.getElementById("largeSideMain");
+    largeSideMain.innerHTML = "";
+    const startX = 95 - ((val.length - 1) * 23 / 2);
+    for (let i = 0; i < val.length; i++) {
+      const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+      tspan.setAttribute("x", startX + i * 23);
+      tspan.setAttribute("y", "54");
+      tspan.textContent = val[i];
+      largeSideMain.appendChild(tspan);
+    }
+    document.getElementById("largeSideMain").setAttribute("fill", color);
+    document.getElementById("largeSideV").setAttribute("fill", color);
+    document.getElementById("largeSideI").setAttribute("fill", color);
+    document.getElementById("largeSideC").setAttribute("fill", color);
+    document.getElementById("largeSideBorder").setAttribute("fill", bg);
+    document.getElementById("largeSideBorder").setAttribute("stroke", color);
+    document.querySelectorAll('.largeSideHole').forEach(e => e.style.display = showHoles ? "block" : "none");
+
+    const sideLetters = bottomVal.padEnd(3, " ").substring(0, 3).toUpperCase();
+    document.getElementById("largeSideV").textContent = sideLetters.charAt(0);
+    document.getElementById("largeSideI").textContent = sideLetters.charAt(1);
+    document.getElementById("largeSideC").textContent = sideLetters.charAt(2);
+
+    // --- Large bottom ---
+    const largeBottomMain = document.getElementById("largeBottomMain");
+    largeBottomMain.innerHTML = "";
+    const startBX = 90 - ((val.length - 1) * 17 / 2);
+    for (let i = 0; i < val.length; i++) {
+      const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+      tspan.setAttribute("x", startBX + i * 17);
+      tspan.setAttribute("y", "42");
+      tspan.textContent = val[i];
+      largeBottomMain.appendChild(tspan);
+    }
+    document.getElementById("largeBottomMain").setAttribute("fill", color);
+    document.getElementById("largeBottomBottom").textContent = bottomVal;
+    document.getElementById("largeBottomBottom").setAttribute("fill", color);
+    document.getElementById("largeBottomBorder").setAttribute("fill", bg);
+    document.getElementById("largeBottomBorder").setAttribute("stroke", color);
+    document.querySelectorAll('.largeBottomHole').forEach(e => e.style.display = showHoles ? "block" : "none");
+
+    // --- Large side 2-line ---
+    const largeSide2lineMain = document.getElementById("largeSide2lineMain");
+    largeSide2lineMain.innerHTML = "";
+    const startX2 = 95 - ((val.length - 1) * 23 / 2);
+    for (let i = 0; i < val.length; i++) {
+      const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+      tspan.setAttribute("x", startX2 + i * 23);
+      tspan.setAttribute("y", "48");
+      tspan.textContent = val[i];
+      largeSide2lineMain.appendChild(tspan);
+    }
+    document.getElementById("largeSide2lineMain").setAttribute("fill", color);
+    document.getElementById("largeSide2lineV").setAttribute("fill", color);
+    document.getElementById("largeSide2lineI").setAttribute("fill", color);
+    document.getElementById("largeSide2lineC").setAttribute("fill", color);
+    document.getElementById("largeSide2lineBorder").setAttribute("fill", bg);
+    document.getElementById("largeSide2lineBorder").setAttribute("stroke", color);
+    document.querySelectorAll('.largeSide2lineHole').forEach(e => e.style.display = showHoles ? "block" : "none");
+
+    const sideLetters2 = bottomVal.padEnd(3, " ").substring(0, 3).toUpperCase();
+    document.getElementById("largeSide2lineV").textContent = sideLetters2.charAt(0);
+    document.getElementById("largeSide2lineI").textContent = sideLetters2.charAt(1);
+    document.getElementById("largeSide2lineC").textContent = sideLetters2.charAt(2);
+
+    document.getElementById("largeSide2lineBottom").textContent = bottomVal.substring(3);
+    document.getElementById("largeSide2lineBottom").setAttribute("fill", color);
+  }
+
+  function switchStyle() {
+    const selected = document.querySelector('input[name="style"]:checked').value;
+    ['euro', 'small', 'largeSide', 'largeBottom', 'largeSide2line'].forEach(id => {
+      document.getElementById("plate-" + id).classList.remove("active");
+    });
+    document.getElementById("plate-" + selected).classList.add("active");
+    update();
+  }
+
+  function sendToShopify() {
+    const style = document.querySelector('input[name="style"]:checked')?.value || '';
+    const mainTextVal = document.getElementById("mainText").value || '';
+    const bottomTextVal = document.getElementById("bottomText").value || '';
+    const textColorVal = document.getElementById("textColor").value || '';
+    const bgColorVal = document.getElementById("bgColor").value || '';
+    const holesToggleVal = document.getElementById("holesToggle").checked ? "1" : "0";
+
+    let link = '';
+    if (typeof buildOutputText === "function") {
+      link = document.getElementById("output-text").value || '';
+    }
+
+    const config = {
+      style: style,
+      mainText: mainTextVal,
+      bottomText: bottomTextVal,
+      textColor: textColorVal,
+      bgColor: bgColorVal,
+      holes: holesToggleVal,
+      link: link
+    };
+
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ source: 'platemate', config }, '*');
+    } else {
+      alert('Not inside Shopify iframe — can’t send to cart.');
+    }
+  }
+
+  function isPreviewMode() {
+    try {
+      const url = new URL(window.location.href);
+      return url.searchParams.get("preview") === "true";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  document.getElementById("btnCopyLink").addEventListener("click", () => {
+    const output = document.getElementById("output-text");
+    output.select();
+    output.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+    alert("Link copied to clipboard!");
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Wire up listeners
     styles.forEach(r => r.addEventListener("change", switchStyle));
-    [mainText, bottomText, textColor, bgColor, holesToggle].forEach(input => input.addEventListener("input", update));
-	loadFromQueryParams();
-    switchStyle();
-	
-	
-	const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-	const body = document.getElementById("pagebody");
+    [mainText, bottomText, textColor, bgColor, holesToggle].forEach(input =>
+      input.addEventListener("input", update)
+    );
 
-	if (prefersDark && body) {
-	  body.classList.add("dark");
+    // Apply URL params and get the plate into the right state
+    loadFromQueryParams();
+    switchStyle(); // calls update()
 
-	  const toggle = document.getElementById("darkModeToggle");
-	  if (toggle) {
-		toggle.checked = true;
-	  }
-	}
+    const preview = isPreviewMode();
 
-function sendToShopify() {
-  // Gather all design values exactly the same way your buildOutputText() does
-  const style = document.querySelector('input[name="style"]:checked')?.value || '';
-  const mainText = document.getElementById("mainText").value || '';
-  const bottomText = document.getElementById("bottomText").value || '';
-  const textColor = document.getElementById("textColor").value || '';
-  const bgColor = document.getElementById("bgColor").value || '';
-  const holesToggle = document.getElementById("holesToggle").checked ? "1" : "0";
+    if (preview) {
+      const plateWrapper = document.querySelector(".plate-wrapper");
+      if (plateWrapper) {
+        const clone = plateWrapper.cloneNode(true);
 
-  let link = '';
-  if (typeof buildOutputText === "function") {
-    link = document.getElementById("output-text").value || '';
-  }
+        document.body.innerHTML = "";
+        document.body.style.margin = "0";
+        document.body.style.padding = "0";
+        document.body.style.background = "#ffffff";
 
-  const config = {
-    style,
-    mainText,
-    bottomText,
-    textColor,
-    bgColor,
-    holes: holesToggle,
-    link
-  };
+        const outer = document.createElement("div");
+        outer.style.display = "flex";
+        outer.style.alignItems = "center";
+        outer.style.justifyContent = "center";
+        outer.style.height = "100vh";
+        outer.appendChild(clone);
 
-  // Post message to Shopify iframe parent
-  if (window.parent && window.parent !== window) {
-    window.parent.postMessage({ source: 'platemate', config }, '*');
-  } else {
-    alert('Not inside Shopify iframe — can’t send to cart.');
-  }
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-  let isPreview = false;
-
-  // Check for ?preview=true
-  try {
-    const url = new URL(window.location.href);
-    if (url.searchParams.get("preview") === "true") {
-      isPreview = true;
-      document.body.classList.add("preview-mode");
-    }
-  } catch (e) {
-    // ignore
-  }
-
-  if (isPreview) {
-    // At this point, your other code (loadFromQueryParams + switchStyle)
-    // has already run and chosen the correct SVG style & colours.
-
-    const plateWrapper = document.querySelector(".plate-wrapper");
-    if (plateWrapper) {
-      // Clone the current preview
-      const clone = plateWrapper.cloneNode(true);
-
-      // Nuke the whole page body and replace with just the plate preview
-      document.body.innerHTML = "";
-      document.body.style.margin = "0";
-      document.body.style.padding = "0";
-      document.body.style.background = "#ffffff";
-
-      const outer = document.createElement("div");
-      outer.style.display = "flex";
-      outer.style.alignItems = "center";
-      outer.style.justifyContent = "center";
-      outer.style.height = "100vh";
-      outer.appendChild(clone);
-
-      document.body.appendChild(outer);
+        document.body.appendChild(outer);
+      }
+      // No Add-to-Cart in preview mode
+      return;
     }
 
-    // In preview mode we don't need "Send to cart" button.
-    return;
-  }
+    // Normal builder mode
+    const sendBtn = document.getElementById("btnSendToShopify");
+    if (sendBtn) {
+      sendBtn.addEventListener("click", sendToShopify);
+    }
 
-  // Normal (non-preview) mode: keep Shopify button working
-  const sendBtn = document.getElementById("btnSendToShopify");
-  if (sendBtn) {
-    sendBtn.addEventListener("click", sendToShopify);
-  }
-});
+    // Optional dark-mode behaviour
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const bodyEl = document.getElementById("pagebody");
+    if (prefersDark && bodyEl) {
+      bodyEl.classList.add("dark");
+      const toggle = document.getElementById("darkModeToggle");
+      if (toggle) {
+        toggle.checked = true;
+      }
+    }
+  });
+</script>
 
-
-		
-  </script>
 </body>
 </html>
