@@ -525,12 +525,10 @@
 	  tspan.setAttribute("y", "54");
 	  tspan.textContent = ch;
 	
-	  // If this is the red emoji heart, use a system/emoji font
-	  if (ch === "❤️") {
-	    tspan.setAttribute("font-family", "Arial, 'Segoe UI Emoji', sans-serif");
-	    // Optional: tweak size to sit nicely with Vicplate
-	    tspan.setAttribute("font-size", "42");
-	  }
+	if (ch === "❤️") {
+	  tspan.setAttribute("font-family", "'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif");
+	  tspan.setAttribute("font-size", "42");
+	}
 	
 	  largeSideMain.appendChild(tspan);
 	});
@@ -559,10 +557,10 @@
 	  tspan.setAttribute("y", "42");
 	  tspan.textContent = ch;
 	
-	  if (ch === "❤️") {
-	    tspan.setAttribute("font-family", "Arial, 'Segoe UI Emoji', sans-serif");
-	    tspan.setAttribute("font-size", "32"); // a bit smaller to suit this line
-	  }
+	if (ch === "❤️") {
+	  tspan.setAttribute("font-family", "'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif");
+	  tspan.setAttribute("font-size", "32");
+	}
 	
 	  largeBottomMain.appendChild(tspan);
 	});
@@ -586,10 +584,10 @@
 	  tspan.setAttribute("y", "48");
 	  tspan.textContent = ch;
 	
-	  if (ch === "❤️") {
-	    tspan.setAttribute("font-family", "Arial, 'Segoe UI Emoji', sans-serif");
-	    tspan.setAttribute("font-size", "42");
-	  }
+	if (ch === "❤️") {
+	  tspan.setAttribute("font-family", "'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif");
+	  tspan.setAttribute("font-size", "42");
+	}
 	
 	  largeSide2lineMain.appendChild(tspan);
 	});
