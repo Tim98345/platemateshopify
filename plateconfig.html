@@ -379,6 +379,25 @@
 	  heart_text: "♥",   // same colour as text
 	  heart_red:  "❤"    // "red" heart (will still render with text colour in SVG, but you can distinguish by character in the link)
 	};
+
+	function getSelectedSpecialChar() {
+	  const key = specialSelect.value;
+	  return specialCharMap[key] || "";
+	}
+		
+	btnAddToMain.addEventListener("click", () => {
+	  const ch = getSelectedSpecialChar();
+	  if (!ch) return;
+	  mainText.value = (mainText.value || "") + ch;
+	  update();
+	});
+	
+	btnAddToBottom.addEventListener("click", () => {
+	  const ch = getSelectedSpecialChar();
+	  if (!ch) return;
+	  bottomText.value = (bottomText.value || "") + ch;
+	  update();
+	});
 		
 	function buildOutputText() {
 	  const style = document.querySelector('input[name="style"]:checked')?.value || '';
@@ -468,25 +487,6 @@
 	  tops.forEach(e => e.style.display = anyHoles ? "block" : "none");
 	  bottoms.forEach(e => e.style.display = holesMode === "corner" ? "block" : "none");
 	}
-
-	function getSelectedSpecialChar() {
-	  const key = specialSelect.value;
-	  return specialCharMap[key] || "";
-	}
-	
-	btnAddToMain.addEventListener("click", () => {
-	  const ch = getSelectedSpecialChar();
-	  if (!ch) return;
-	  mainText.value = (mainText.value || "") + ch;
-	  update();
-	});
-	
-	btnAddToBottom.addEventListener("click", () => {
-	  const ch = getSelectedSpecialChar();
-	  if (!ch) return;
-	  bottomText.value = (bottomText.value || "") + ch;
-	  update();
-	});
 		
 	  document.getElementById("output-text").value = buildOutputText();
 
