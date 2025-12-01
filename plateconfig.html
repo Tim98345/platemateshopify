@@ -205,11 +205,13 @@
 									</div>
 									<div class="col-12 double-spaced">
 									  <div class="d-flex justify-content-md-end justify-content-start">
-										<div class="form-check">
-										  <input class="form-check-input" type="checkbox" id="holesToggle">
-										  <label class="form-check-label" for="holesToggle">
-											Add Holes?
-										  </label>
+										<div class="col-md-4">
+										  <label for="holesMode" class="form-label">Hole Style</label>
+										<select id="holesMode" class="form-select">
+										  <option value="none">No Holes</option>
+										  <option value="top">Top Holes</option>
+										  <option value="corner" selected>Corner Holes</option>
+										</select>
 										</div>
 									  </div>
 									</div>
@@ -220,10 +222,10 @@
 														<!-- Euro Style -->
 														<svg viewBox="0 0 120 50" id="plate-euro">
 														  <rect id="euroBorder" x="1" y="1" width="118" height="48" rx="5" ry="5" stroke="#000000" stroke-width="2" fill="#000000"/>
-														  <circle class="euroHole" cx="5" cy="5" r="1.5" fill="#1e1e1e"/>
-														  <circle class="euroHole" cx="115" cy="5" r="1.5" fill="#1e1e1e"/>
-														  <circle class="euroHole" cx="5" cy="45" r="1.5" fill="#1e1e1e"/>
-														  <circle class="euroHole" cx="115" cy="45" r="1.5" fill="#1e1e1e"/>
+															<circle class="euroHole euroHole-top" cx="5" cy="5" r="1.5" fill="#1e1e1e"/>
+															<circle class="euroHole euroHole-top" cx="115" cy="5" r="1.5" fill="#1e1e1e"/>
+															<circle class="euroHole euroHole-bottom" cx="5" cy="45" r="1.5" fill="#1e1e1e"/>
+															<circle class="euroHole euroHole-bottom" cx="115" cy="45" r="1.5" fill="#1e1e1e"/>
 														  <text id="euroTop" x="60" y="11" font-size="8" text-anchor="middle" fill="#FFFFFF" font-family="Arial Narrow">VIC</text>
 														  <text id="euroMain" x="61.5" y="40" text-anchor="middle" fill="#FFFFFF" font-family="FE Mittelschrift" font-size="33">DEFAULT</text>
 														</svg>
@@ -231,10 +233,10 @@
 														<!-- Small Plate -->
 														<svg viewBox="0 0 120 50" id="plate-small">
 														  <rect id="smallBorder" x="1" y="1" width="118" height="48" rx="5" ry="5" stroke="#000000" stroke-width="2" fill="#0000FF"/>
-														  <circle class="smallHole" cx="5" cy="5" r="1.5" fill="#1e1e1e"/>
-														  <circle class="smallHole" cx="115" cy="5" r="1.5" fill="#1e1e1e"/>
-														  <circle class="smallHole" cx="5" cy="45" r="1.5" fill="#1e1e1e"/>
-														  <circle class="smallHole" cx="115" cy="45" r="1.5" fill="#1e1e1e"/>
+															<circle class="smallHole smallHole-top" cx="5" cy="5" r="1.5" fill="#1e1e1e"/>
+															<circle class="smallHole smallHole-top" cx="115" cy="5" r="1.5" fill="#1e1e1e"/>
+															<circle class="smallHole smallHole-bottom" cx="5" cy="45" r="1.5" fill="#1e1e1e"/>
+															<circle class="smallHole smallHole-bottom" cx="115" cy="45" r="1.5" fill="#1e1e1e"/>
 														  <text id="smallMain" x="61.5" y="31" font-size="28" text-anchor="middle" fill="#FFFFFF" font-family="Vicplate">CUSTOM</text>
 														  <text id="smallBottom" x="60" y="45" font-size="10" text-anchor="middle" fill="#FFFFFF" font-family="Arial"></text>
 														</svg>
@@ -242,10 +244,10 @@
 														<!-- Large Side -->
 														<svg viewBox="0 0 180 65" id="plate-largeSide">
 														  <rect id="largeSideBorder" x="1" y="1" width="178" height="63" rx="5" ry="5" stroke="#000000" stroke-width="2" fill="#000000"/>
-														  <circle class="largeSideHole" cx="5" cy="5" r="1.5" fill="#1e1e1e"/>
-														  <circle class="largeSideHole" cx="175" cy="5" r="1.5" fill="#1e1e1e"/>
-														  <circle class="largeSideHole" cx="5" cy="60" r="1.5" fill="#1e1e1e"/>
-														  <circle class="largeSideHole" cx="175" cy="60" r="1.5" fill="#1e1e1e"/>
+															<circle class="largeSideHole largeSideHole-top" cx="5" cy="5" r="1.5" fill="#1e1e1e"/>
+															<circle class="largeSideHole largeSideHole-top" cx="175" cy="5" r="1.5" fill="#1e1e1e"/>
+															<circle class="largeSideHole largeSideHole-bottom" cx="5" cy="60" r="1.5" fill="#1e1e1e"/>
+															<circle class="largeSideHole largeSideHole-bottom" cx="175" cy="60" r="1.5" fill="#1e1e1e"/>
 														  <text id="largeSideV" x="8" y="22" font-size="18" fill="#FFFFFF" font-family="Vicplate">V</text>
 														  <text id="largeSideI" x="8" y="40" font-size="18" fill="#FFFFFF" font-family="Vicplate">I</text>
 														  <text id="largeSideC" x="8" y="57" font-size="18" fill="#FFFFFF" font-family="Vicplate">C</text>
@@ -255,10 +257,10 @@
 														<!-- Large Bottom -->
 														<svg viewBox="0 0 180 65" id="plate-largeBottom">
 														  <rect id="largeBottomBorder" x="1" y="1" width="178" height="63" rx="5" ry="5" stroke="#000000" stroke-width="2" fill="#0000FF"/>
-														  <circle class="largeBottomHole" cx="5" cy="5" r="1.5" fill="#1e1e1e"/>
-														  <circle class="largeBottomHole" cx="175" cy="5" r="1.5" fill="#1e1e1e"/>
-														  <circle class="largeBottomHole" cx="5" cy="60" r="1.5" fill="#1e1e1e"/>
-														  <circle class="largeBottomHole" cx="175" cy="60" r="1.5" fill="#1e1e1e"/>
+															<circle class="largeBottomHole largeBottomHole-top" cx="5" cy="5" r="1.5" fill="#1e1e1e"/>
+															<circle class="largeBottomHole largeBottomHole-top" cx="175" cy="5" r="1.5" fill="#1e1e1e"/>
+															<circle class="largeBottomHole largeBottomHole-bottom" cx="5" cy="60" r="1.5" fill="#1e1e1e"/>
+															<circle class="largeBottomHole largeBottomHole-bottom" cx="175" cy="60" r="1.5" fill="#1e1e1e"/>
 														  <text id="largeBottomMain" font-size="42" text-anchor="middle" fill="#FFFFFF" font-family="Vicplate"></text>
 														  <text id="largeBottomBottom" x="90" y="58" font-size="11" text-anchor="middle" fill="#FFFFFF" font-family="Arial">VICTORIA</text>
 														</svg>
@@ -266,10 +268,11 @@
 														<!-- Large Side (2 Line) -->		
 														<svg viewBox="0 0 180 75" id="plate-largeSide2line">
 	 													 <rect id="largeSide2lineBorder" x="1" y="1" width="178" height="63" rx="5" ry="5" stroke="#000000" stroke-width="2" fill="#000000"/>
-	 													 <circle class="largeSide2lineHole" cx="5" cy="5" r="1.5" fill="#1e1e1e"/>
-	  													 <circle class="largeSide2lineHole" cx="175" cy="5" r="1.5" fill="#1e1e1e"/>
-	  													 <circle class="largeSide2lineHole" cx="5" cy="60" r="1.5" fill="#1e1e1e"/>
-	  													 <circle class="largeSide2lineHole" cx="175" cy="60" r="1.5" fill="#1e1e1e"/>
+														<circle class="largeSide2lineHole largeSide2lineHole-top" cx="5" cy="5" r="1.5" fill="#1e1e1e"/>
+														<circle class="largeSide2lineHole largeSide2lineHole-top" cx="175" cy="5" r="1.5" fill="#1e1e1e"/>
+														<circle class="largeSide2lineHole largeSide2lineHole-bottom" cx="5" cy="60" r="1.5" fill="#1e1e1e"/>
+														<circle class="largeSide2lineHole largeSide2lineHole-bottom" cx="175" cy="60" r="1.5" fill="#1e1e1e"/>
+
 	
 	 													 <!-- Side letters -->
 	  													 <text id="largeSide2lineV" x="8" y="22" font-size="18" fill="#FFFFFF" font-family="Vicplate">V</text>
@@ -357,7 +360,7 @@ Final artwork will be shared for approval</p>
     const styles = document.getElementsByName("style");
     const textColor = document.getElementById("textColor");
     const bgColor = document.getElementById("bgColor");
-    const holesToggle = document.getElementById("holesToggle");
+    const holesModeSelect = document.getElementById("holesMode");
     const mainText = document.getElementById("mainText");
     const bottomText = document.getElementById("bottomText");
 
@@ -367,16 +370,16 @@ Final artwork will be shared for approval</p>
 	  const bottomText = document.getElementById("bottomText").value || '';
 	  const textColor = document.getElementById("textColor").value || '';
 	  const bgColor = document.getElementById("bgColor").value || '';
-	  const holesToggle = document.getElementById("holesToggle").checked ? "1" : "0";
-
-	  const params = new URLSearchParams({
-		style,
-		mainText,
-		bottomText,
-		textColor,
-		bgColor,
-		holes: holesToggle
-	  });
+	const holesMode = document.getElementById("holesMode").value || "corner";
+	
+	const params = new URLSearchParams({
+	  style,
+	  mainText,
+	  bottomText,
+	  textColor,
+	  bgColor,
+	  holes: holesMode
+	});
 
 	  return `${location.origin}${location.pathname}?${params.toString()}`;
 	}
@@ -424,10 +427,14 @@ Final artwork will be shared for approval</p>
 		}
 	  }
 
-	  const holes = params.get("holes");
-	  document.getElementById("holesToggle").checked = holes === "1";
+	const holesMode = params.get("holes");
+	if (holesMode) {
+	  const select = document.getElementById("holesMode");
+	  if ([...select.options].some(o => o.value === holesMode)) {
+	    select.value = holesMode;
+	  }
 	}
-
+	}
 
 
     function update() {
@@ -435,8 +442,17 @@ Final artwork will be shared for approval</p>
       const bottomVal = bottomText.value.toUpperCase();
       const color = textColor.value;
       const bg = bgColor.value;
-      const showHoles = holesToggle.checked;
-	  
+	const holesMode = document.getElementById("holesMode").value || "corner";
+	const anyHoles = holesMode !== "none";
+	
+	function applyHoleMode(prefix) {
+	  const tops = document.querySelectorAll(`.${prefix}Hole-top`);
+	  const bottoms = document.querySelectorAll(`.${prefix}Hole-bottom`);
+	
+	  tops.forEach(e => e.style.display = anyHoles ? "block" : "none");
+	  bottoms.forEach(e => e.style.display = holesMode === "corner" ? "block" : "none");
+	}
+
 	  document.getElementById("output-text").value = buildOutputText();
 
       document.getElementById("euroMain").textContent = val;
@@ -445,13 +461,11 @@ Final artwork will be shared for approval</p>
       document.getElementById("euroTop").setAttribute("fill", color);
       document.getElementById("euroBorder").setAttribute("fill", bg);
       document.getElementById("euroBorder").setAttribute("stroke", color);
-      document.querySelectorAll('.euroHole').forEach(e=>e.style.display = showHoles ? "block":"none");
 
       document.getElementById("smallMain").textContent = val;
       document.getElementById("smallMain").setAttribute("fill", color);
       document.getElementById("smallBorder").setAttribute("fill", bg);
       document.getElementById("smallBorder").setAttribute("stroke", color);
-      document.querySelectorAll('.smallHole').forEach(e=>e.style.display = showHoles ? "block":"none");
 
       const smallBottom = document.getElementById("smallBottom");
       smallBottom.innerHTML = "";
@@ -479,7 +493,6 @@ Final artwork will be shared for approval</p>
       document.getElementById("largeSideC").setAttribute("fill", color);
       document.getElementById("largeSideBorder").setAttribute("fill", bg);
       document.getElementById("largeSideBorder").setAttribute("stroke", color);
-      document.querySelectorAll('.largeSideHole').forEach(e=>e.style.display = showHoles ? "block":"none");
 
       const sideLetters = bottomVal.padEnd(3, " ").substring(0,3).toUpperCase();
       document.getElementById("largeSideV").textContent = sideLetters.charAt(0);
@@ -501,7 +514,6 @@ Final artwork will be shared for approval</p>
       document.getElementById("largeBottomBottom").setAttribute("fill", color);
       document.getElementById("largeBottomBorder").setAttribute("fill", bg);
       document.getElementById("largeBottomBorder").setAttribute("stroke", color);
-      document.querySelectorAll('.largeBottomHole').forEach(e=>e.style.display = showHoles ? "block":"none");
 
 	// --- Large Side (2 Line) ---
 	const largeSide2lineMain = document.getElementById("largeSide2lineMain");
@@ -520,7 +532,6 @@ Final artwork will be shared for approval</p>
 	document.getElementById("largeSide2lineC").setAttribute("fill", color);
 	document.getElementById("largeSide2lineBorder").setAttribute("fill", bg);
 	document.getElementById("largeSide2lineBorder").setAttribute("stroke", color);
-	document.querySelectorAll('.largeSide2lineHole').forEach(e => e.style.display = showHoles ? "block":"none");
 	
 	const sideLetters2 = bottomVal.padEnd(3, " ").substring(0,3).toUpperCase();
 	document.getElementById("largeSide2lineV").textContent = sideLetters2.charAt(0);
@@ -528,7 +539,13 @@ Final artwork will be shared for approval</p>
 	document.getElementById("largeSide2lineC").textContent = sideLetters2.charAt(2);
 	
 	document.getElementById("largeSide2lineBottom").textContent = bottomVal.substring(3);
-	document.getElementById("largeSide2lineBottom").setAttribute("fill", color);		
+	document.getElementById("largeSide2lineBottom").setAttribute("fill", color);
+
+		applyHoleMode("euro");
+		applyHoleMode("small");
+		applyHoleMode("largeSide");
+		applyHoleMode("largeBottom");
+		applyHoleMode("largeSide2line");
     }
 
 
@@ -543,7 +560,7 @@ Final artwork will be shared for approval</p>
     }
 
     styles.forEach(r => r.addEventListener("change", switchStyle));
-    [mainText, bottomText, textColor, bgColor, holesToggle].forEach(input => input.addEventListener("input", update));
+    [mainText, bottomText, textColor, bgColor, holesModeSelect].forEach(input => input.addEventListener("input", update));
 	loadFromQueryParams();
     switchStyle();
 	
@@ -567,7 +584,7 @@ function sendToShopify() {
   const bottomText = document.getElementById("bottomText").value || '';
   const textColor = document.getElementById("textColor").value || '';
   const bgColor = document.getElementById("bgColor").value || '';
-  const holesToggle = document.getElementById("holesToggle").checked ? "1" : "0";
+  const holesMode = document.getElementById("holesMode").value || "corner";
 
   let link = '';
   if (typeof buildOutputText === "function") {
@@ -580,7 +597,7 @@ function sendToShopify() {
     bottomText,
     textColor,
     bgColor,
-    holes: holesToggle,
+    holes: holesMode,
     link
   };
 
