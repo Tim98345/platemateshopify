@@ -377,7 +377,7 @@
 	// Map dropdown values to actual characters
 	const specialCharMap = {
 	  heart_text: "♥",   // same colour as text
-	  heart_red:  "❤"    // "red" heart (will still render with text colour in SVG, but you can distinguish by character in the link)
+	  heart_red:  "❤️"    // "red" heart (will still render with text colour in SVG, but you can distinguish by character in the link)
 	};
 
 	function getSelectedSpecialChar() {
@@ -405,7 +405,7 @@
 	  const bottomText = document.getElementById("bottomText").value || '';
 	  const textColor = document.getElementById("textColor").value || '';
 	  const bgColor = document.getElementById("bgColor").value || '';
-	const holesMode = document.getElementById("holesMode").value || "corner";
+	  const holesMode = document.getElementById("holesMode").value || "none";
 	
 	const params = new URLSearchParams({
 	  style,
@@ -512,17 +512,30 @@
         smallBottom.appendChild(tspan);
       }
 
-      const largeSideMain = document.getElementById("largeSideMain");
-      largeSideMain.innerHTML = "";
-      const startX = 95 - ((val.length - 1) * 23 / 2);
-      for (let i = 0; i < val.length; i++) {
-        const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
-        tspan.setAttribute("x", startX + i * 23);
-        tspan.setAttribute("y", "54");
-        tspan.textContent = val[i];
-        largeSideMain.appendChild(tspan);
-      }
-      document.getElementById("largeSideMain").setAttribute("fill", color);
+	const largeSideMain = document.getElementById("largeSideMain");
+	largeSideMain.innerHTML = "";
+	
+	// iterate over *code points* so emoji stays as one character
+	const charsSide = Array.from(val);
+	const startX = 95 - ((charsSide.length - 1) * 23 / 2);
+	
+	charsSide.forEach((ch, index) => {
+	  const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+	  tspan.setAttribute("x", startX + index * 23);
+	  tspan.setAttribute("y", "54");
+	  tspan.textContent = ch;
+	
+	  // If this is the red emoji heart, use a system/emoji font
+	  if (ch === "❤️") {
+	    tspan.setAttribute("font-family", "Arial, 'Segoe UI Emoji', sans-serif");
+	    // Optional: tweak size to sit nicely with Vicplate
+	    tspan.setAttribute("font-size", "42");
+	  }
+	
+	  largeSideMain.appendChild(tspan);
+	});
+	
+	document.getElementById("largeSideMain").setAttribute("fill", color);
       document.getElementById("largeSideV").setAttribute("fill", color);
       document.getElementById("largeSideI").setAttribute("fill", color);
       document.getElementById("largeSideC").setAttribute("fill", color);
@@ -534,17 +547,27 @@
       document.getElementById("largeSideI").textContent = sideLetters.charAt(1);
       document.getElementById("largeSideC").textContent = sideLetters.charAt(2);
 
-      const largeBottomMain = document.getElementById("largeBottomMain");
-      largeBottomMain.innerHTML = "";
-      const startBX = 90 - ((val.length - 1) * 17 / 2);
-      for (let i = 0; i < val.length; i++) {
-        const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
-        tspan.setAttribute("x", startBX + i * 17);
-        tspan.setAttribute("y", "42");
-        tspan.textContent = val[i];
-        largeBottomMain.appendChild(tspan);
-      }
-      document.getElementById("largeBottomMain").setAttribute("fill", color);
+	const largeBottomMain = document.getElementById("largeBottomMain");
+	largeBottomMain.innerHTML = "";
+	
+	const charsBottom = Array.from(val);
+	const startBX = 90 - ((charsBottom.length - 1) * 17 / 2);
+	
+	charsBottom.forEach((ch, index) => {
+	  const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+	  tspan.setAttribute("x", startBX + index * 17);
+	  tspan.setAttribute("y", "42");
+	  tspan.textContent = ch;
+	
+	  if (ch === "❤️") {
+	    tspan.setAttribute("font-family", "Arial, 'Segoe UI Emoji', sans-serif");
+	    tspan.setAttribute("font-size", "32"); // a bit smaller to suit this line
+	  }
+	
+	  largeBottomMain.appendChild(tspan);
+	});
+	
+	document.getElementById("largeBottomMain").setAttribute("fill", color);
       document.getElementById("largeBottomBottom").textContent = bottomVal;
       document.getElementById("largeBottomBottom").setAttribute("fill", color);
       document.getElementById("largeBottomBorder").setAttribute("fill", bg);
@@ -553,15 +576,25 @@
 	// --- Large Side (2 Line) ---
 	const largeSide2lineMain = document.getElementById("largeSide2lineMain");
 	largeSide2lineMain.innerHTML = "";
-	const startX2 = 95 - ((val.length - 1) * 23 / 2);
-	for (let i = 0; i < val.length; i++) {
+	
+	const charsSide2 = Array.from(val);
+	const startX2 = 95 - ((charsSide2.length - 1) * 23 / 2);
+	
+	charsSide2.forEach((ch, index) => {
 	  const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
-	  tspan.setAttribute("x", startX2 + i * 23);
+	  tspan.setAttribute("x", startX2 + index * 23);
 	  tspan.setAttribute("y", "48");
-	  tspan.textContent = val[i];
+	  tspan.textContent = ch;
+	
+	  if (ch === "❤️") {
+	    tspan.setAttribute("font-family", "Arial, 'Segoe UI Emoji', sans-serif");
+	    tspan.setAttribute("font-size", "42");
+	  }
+	
 	  largeSide2lineMain.appendChild(tspan);
-	}
-	document.getElementById("largeSide2lineMain").setAttribute("fill", color);
+	});
+
+document.getElementById("largeSide2lineMain").setAttribute("fill", color);
 	document.getElementById("largeSide2lineV").setAttribute("fill", color);
 	document.getElementById("largeSide2lineI").setAttribute("fill", color);
 	document.getElementById("largeSide2lineC").setAttribute("fill", color);
