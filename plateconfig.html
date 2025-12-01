@@ -657,20 +657,35 @@ function sendToShopify() {
   const bgColor = document.getElementById("bgColor").value || '';
   const holesMode = document.getElementById("holesMode").value || "corner";
 
+	// Calculate surcharge for hearts
+	let surcharge = 0;
+	const textCombined = mainText + bottomText;
+	
+	// Same-color heart (♥)
+	if (textCombined.includes("♥")) {
+	  surcharge += 5;
+	}
+	
+	// Red heart (❤️)
+	if (textCombined.includes("❤️")) {
+	  surcharge += 10;
+	}
+	
   let link = '';
   if (typeof buildOutputText === "function") {
     link = document.getElementById("output-text").value || '';
   }
 
-  const config = {
-    style,
-    mainText,
-    bottomText,
-    textColor,
-    bgColor,
-    holes: holesMode,
-    link
-  };
+const config = {
+  style,
+  mainText,
+  bottomText,
+  textColor,
+  bgColor,
+  holes: holesMode,
+  link,
+  surcharge   // <-- added here
+};
 
   // Post message to Shopify iframe parent
   if (window.parent && window.parent !== window) {
