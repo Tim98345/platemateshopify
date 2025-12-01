@@ -215,6 +215,27 @@
 										</div>
 									  </div>
 									</div>
+									<div class="col-12 double-spaced">
+									  <div class="row align-items-end">
+									    <div class="col-md-4 col-sm-12 spaced">
+									      <label for="specialChar" class="form-label">Special Character</label>
+									      <select id="specialChar" class="form-select">
+									        <option value="heart_text">Heart (same as text)</option>
+									        <option value="heart_red">Heart (red)</option>
+									      </select>
+									    </div>
+									    <div class="col-md-4 col-sm-6 spaced">
+									      <button type="button" id="btnAddToMain" class="btn btn-outline-secondary w-100">
+									        Add to Main Text
+									      </button>
+									    </div>
+									    <div class="col-md-4 col-sm-6 spaced">
+									      <button type="button" id="btnAddToBottom" class="btn btn-outline-secondary w-100">
+									        Add to Location Text
+									      </button>
+									    </div>
+									  </div>
+									</div>
 									</div> <!-- end #controls-container -->		
 									<div class="row">
 										<div class="col-12 layout-spacing double-spaced">
@@ -348,7 +369,17 @@
     const holesModeSelect = document.getElementById("holesMode");
     const mainText = document.getElementById("mainText");
     const bottomText = document.getElementById("bottomText");
-
+	// NEW:
+	const specialSelect = document.getElementById("specialChar");
+	const btnAddToMain = document.getElementById("btnAddToMain");
+	const btnAddToBottom = document.getElementById("btnAddToBottom");
+	
+	// Map dropdown values to actual characters
+	const specialCharMap = {
+	  heart_text: "♥",   // same colour as text
+	  heart_red:  "❤"    // "red" heart (will still render with text colour in SVG, but you can distinguish by character in the link)
+	};
+		
 	function buildOutputText() {
 	  const style = document.querySelector('input[name="style"]:checked')?.value || '';
 	  const mainText = document.getElementById("mainText").value || '';
@@ -438,6 +469,25 @@
 	  bottoms.forEach(e => e.style.display = holesMode === "corner" ? "block" : "none");
 	}
 
+	function getSelectedSpecialChar() {
+	  const key = specialSelect.value;
+	  return specialCharMap[key] || "";
+	}
+	
+	btnAddToMain.addEventListener("click", () => {
+	  const ch = getSelectedSpecialChar();
+	  if (!ch) return;
+	  mainText.value = (mainText.value || "") + ch;
+	  update();
+	});
+	
+	btnAddToBottom.addEventListener("click", () => {
+	  const ch = getSelectedSpecialChar();
+	  if (!ch) return;
+	  bottomText.value = (bottomText.value || "") + ch;
+	  update();
+	});
+		
 	  document.getElementById("output-text").value = buildOutputText();
 
       document.getElementById("euroMain").textContent = val;
