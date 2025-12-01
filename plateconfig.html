@@ -515,7 +515,6 @@
 	const largeSideMain = document.getElementById("largeSideMain");
 	largeSideMain.innerHTML = "";
 	
-	// iterate over *code points* so emoji stays as one character
 	const charsSide = Array.from(val);
 	const startX = 95 - ((charsSide.length - 1) * 23 / 2);
 	
@@ -525,15 +524,19 @@
 	  tspan.setAttribute("y", "54");
 	  tspan.textContent = ch;
 	
-	if (ch === "❤️") {
-	  tspan.setAttribute("font-family", "'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif");
-	  tspan.setAttribute("font-size", "42");
-	}
+	  if (ch === "❤️") {
+	    // Always red heart
+	    tspan.setAttribute("fill", "#C12E1F");
+	    // optional: keep Vicplate so shape is consistent
+	    tspan.setAttribute("font-family", "Vicplate, Arial, sans-serif");
+	  } else {
+	    // Normal chars follow selected text colour
+	    tspan.setAttribute("fill", color);
+	  }
 	
 	  largeSideMain.appendChild(tspan);
 	});
-	
-	document.getElementById("largeSideMain").setAttribute("fill", color);
+		
       document.getElementById("largeSideV").setAttribute("fill", color);
       document.getElementById("largeSideI").setAttribute("fill", color);
       document.getElementById("largeSideC").setAttribute("fill", color);
@@ -557,15 +560,16 @@
 	  tspan.setAttribute("y", "42");
 	  tspan.textContent = ch;
 	
-	if (ch === "❤️") {
-	  tspan.setAttribute("font-family", "'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif");
-	  tspan.setAttribute("font-size", "32");
-	}
+	  if (ch === "❤️") {
+	    tspan.setAttribute("fill", "#C12E1F");      // fixed red
+	    tspan.setAttribute("font-family", "Vicplate, Arial, sans-serif");
+	  } else {
+	    tspan.setAttribute("fill", color);
+	  }
 	
 	  largeBottomMain.appendChild(tspan);
 	});
 	
-	document.getElementById("largeBottomMain").setAttribute("fill", color);
       document.getElementById("largeBottomBottom").textContent = bottomVal;
       document.getElementById("largeBottomBottom").setAttribute("fill", color);
       document.getElementById("largeBottomBorder").setAttribute("fill", bg);
@@ -584,15 +588,16 @@
 	  tspan.setAttribute("y", "48");
 	  tspan.textContent = ch;
 	
-	if (ch === "❤️") {
-	  tspan.setAttribute("font-family", "'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif");
-	  tspan.setAttribute("font-size", "42");
-	}
+	  if (ch === "❤️") {
+	    tspan.setAttribute("fill", "#C12E1F");
+	    tspan.setAttribute("font-family", "Vicplate, Arial, sans-serif");
+	  } else {
+	    tspan.setAttribute("fill", color);
+	  }
 	
 	  largeSide2lineMain.appendChild(tspan);
 	});
 
-document.getElementById("largeSide2lineMain").setAttribute("fill", color);
 	document.getElementById("largeSide2lineV").setAttribute("fill", color);
 	document.getElementById("largeSide2lineI").setAttribute("fill", color);
 	document.getElementById("largeSide2lineC").setAttribute("fill", color);
