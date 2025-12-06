@@ -656,19 +656,18 @@ function sendToShopify() {
   const textColor = document.getElementById("textColor").value || '';
   const bgColor = document.getElementById("bgColor").value || '';
   const holesMode = document.getElementById("holesMode").value || "corner";
-
-	// Calculate surcharge for hearts
-	let surcharge = 0;
+  let specialLabel = 'None';
+	
 	const textCombined = mainText + bottomText;
 	
 	// Same-color heart (♥)
 	if (textCombined.includes("♥")) {
-	  surcharge += 5;
+		specialLabel = "Special Two Colours";
 	}
 	
 	// Red heart (❤️)
 	if (textCombined.includes("❤️")) {
-	  surcharge += 10;
+		specialLabel = "Special Three Colours";
 	}
 	
   let link = '';
@@ -684,7 +683,7 @@ const config = {
   bgColor,
   holes: holesMode,
   link,
-  surcharge   // <-- added here
+  specialLabel   // 👈 SEND THIS DIRECTLY
 };
 
   // Post message to Shopify iframe parent
