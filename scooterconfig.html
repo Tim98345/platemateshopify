@@ -292,21 +292,21 @@
 		
 	function buildOutputText() {
 	  const style = document.querySelector('input[name="style"]:checked')?.value || '';
-	  const mainText = document.getElementById("mainText").value || '';
-	  const bottomText = document.getElementById("bottomText").value || '';
+	  const mainText = sanitizeText(document.getElementById("mainText").value);
+	  const bottomText = sanitizeText(document.getElementById("bottomText").value);
 	  const textColor = document.getElementById("textColor").value || '';
 	  const bgColor = document.getElementById("bgColor").value || '';
 	  const holesMode = document.getElementById("holesMode").value || "none";
 	
-	const params = new URLSearchParams({
-	  style,
-	  mainText,
-	  bottomText,
-	  textColor,
-	  bgColor,
-	  holes: holesMode
-	});
-
+	  const params = new URLSearchParams({
+	    style,
+	    mainText,
+	    bottomText,
+	    textColor,
+	    bgColor,
+	    holes: holesMode
+	  });
+	
 	  return `${location.origin}${location.pathname}?${params.toString()}`;
 	}
 	
@@ -366,6 +366,8 @@
 function update() {
   const val = sanitizeText(mainText.value);
   const bottomVal = sanitizeText(bottomText.value);
+  mainText.value = val;
+  bottomText.value = bottomVal;
   const color = textColor.value;
   const bg = bgColor.value;
 
