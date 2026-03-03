@@ -112,7 +112,7 @@
                 <div class="middle-content container-xxl p-0">
                     <!-- CONTENT AREA -->
                     <div class="row layout-top-spacing" style="overflow-y:auto;">
-						<div id="controls-container">
+						<div id="controls-container" class="col-12">
 							<div class="card">
 								<div class="card-body">
 									<div class="row">
@@ -193,27 +193,6 @@
 										  <option value="corner">Corner Holes</option>
 										</select>
 										</div>
-									  </div>
-									</div>
-									<div class="col-12 double-spaced">
-									  <div class="row align-items-end">
-									    <div class="col-md-4 col-sm-12 spaced">
-									      <label for="specialChar" class="form-label">Special Character</label>
-									      <select id="specialChar" class="form-select">
-									        <option value="heart_text">Heart (same as text)</option>
-									        <option value="heart_red">Heart (red)</option>
-									      </select>
-									    </div>
-									    <div class="col-md-4 col-sm-6 spaced">
-									      <button type="button" id="btnAddToMain" class="btn btn-outline-secondary w-100">
-									        Add to Main Text
-									      </button>
-									    </div>
-									    <div class="col-md-4 col-sm-6 spaced">
-									      <button type="button" id="btnAddToBottom" class="btn btn-outline-secondary w-100">
-									        Add to Location Text
-									      </button>
-									    </div>
 									  </div>
 									</div>
 							        </div>  <!-- end card-body -->
@@ -310,35 +289,6 @@
     const holesModeSelect = document.getElementById("holesMode");
     const mainText = document.getElementById("mainText");
     const bottomText = document.getElementById("bottomText");
-	// NEW:
-	const specialSelect = document.getElementById("specialChar");
-	const btnAddToMain = document.getElementById("btnAddToMain");
-	const btnAddToBottom = document.getElementById("btnAddToBottom");
-	
-	// Map dropdown values to actual characters
-	const specialCharMap = {
-	  heart_text: "♥",   // same colour as text
-	  heart_red:  "❤️"    // "red" heart (will still render with text colour in SVG, but you can distinguish by character in the link)
-	};
-
-	function getSelectedSpecialChar() {
-	  const key = specialSelect.value;
-	  return specialCharMap[key] || "";
-	}
-		
-	btnAddToMain.addEventListener("click", () => {
-	  const ch = getSelectedSpecialChar();
-	  if (!ch) return;
-	  mainText.value = (mainText.value || "") + ch;
-	  update();
-	});
-	
-	btnAddToBottom.addEventListener("click", () => {
-	  const ch = getSelectedSpecialChar();
-	  if (!ch) return;
-	  bottomText.value = (bottomText.value || "") + ch;
-	  update();
-	});
 		
 	function buildOutputText() {
 	  const style = document.querySelector('input[name="style"]:checked')?.value || '';
@@ -414,8 +364,8 @@
 
 
 function update() {
-  const val = (mainText.value || "").toUpperCase();
-  const bottomVal = (bottomText.value || "").toUpperCase();
+  const val = sanitizeText(mainText.value);
+  const bottomVal = sanitizeText(bottomText.value);
   const color = textColor.value;
   const bg = bgColor.value;
 
@@ -445,12 +395,7 @@ function update() {
     tspan.setAttribute("y", "54");
     tspan.textContent = ch;
 
-    if (ch === "❤️") {
-      tspan.setAttribute("fill", "#C12E1F");
-      tspan.setAttribute("font-family", "Vicplate, Arial, sans-serif");
-    } else {
-      tspan.setAttribute("fill", color);
-    }
+    tspan.setAttribute("fill", color);
 
     largeSideMain.appendChild(tspan);
   });
@@ -480,12 +425,8 @@ function update() {
     tspan.setAttribute("y", "42");
     tspan.textContent = ch;
 
-    if (ch === "❤️") {
-      tspan.setAttribute("fill", "#C12E1F");
-      tspan.setAttribute("font-family", "Vicplate, Arial, sans-serif");
-    } else {
-      tspan.setAttribute("fill", color);
-    }
+    tspan.setAttribute("fill", color);
+
 
     largeBottomMain.appendChild(tspan);
   });
@@ -537,6 +478,10 @@ function update() {
 	  }
 	}
 
+function sanitizeText(s) {
+  return (s || "").toUpperCase().replace(/[^A-Z0-9 \-]/g, "");
+}
+		
 function sendToShopify() {
   // Gather all design values exactly the same way your buildOutputText() does
   const style = document.querySelector('input[name="style"]:checked')?.value || '';
@@ -545,20 +490,8 @@ function sendToShopify() {
   const textColor = document.getElementById("textColor").value || '';
   const bgColor = document.getElementById("bgColor").value || '';
   const holesMode = document.getElementById("holesMode").value || "none";
-  let specialLabel = 'None';
-	
-	const textCombined = mainText + bottomText;
-	
-	// Same-color heart (♥)
-	if (textCombined.includes("♥")) {
-		specialLabel = "Special Two Colours";
-	}
-	
-	// Red heart (❤️)
-	if (textCombined.includes("❤️")) {
-		specialLabel = "Special Three Colours";
-	}
-	
+
+
   let link = '';
   if (typeof buildOutputText === "function") {
     link = document.getElementById("output-text").value || '';
@@ -571,8 +504,7 @@ const config = {
   textColor,
   bgColor,
   holes: holesMode,
-  link,
-  specialLabel   // 👈 SEND THIS DIRECTLY
+  link
 };
 
   // Post message to Shopify iframe parent
