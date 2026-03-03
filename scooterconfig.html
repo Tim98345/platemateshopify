@@ -204,7 +204,7 @@
 
 														<!-- Large Side -->
 														<svg viewBox="0 0 160 40" id="plate-largeSide">
-														  <rect id="largeSideBorder" x="1" y="1" width="158" height="38" rx="5" ry="5" stroke="#000000" stroke-width="2" fill="#000000"/>
+														  <rect id="largeSideBorder" x="1" y="1" width="158" height="38" rx="5" ry="5" stroke="#000000" stroke-width="1" fill="#000000"/>
 															<circle class="largeSideHole largeSideHole-top" cx="5" cy="5" r="1.5" fill="#1e1e1e"/>
 															<circle class="largeSideHole largeSideHole-top" cx="155" cy="5" r="1.5" fill="#1e1e1e"/>
 															<circle class="largeSideHole largeSideHole-bottom" cx="5" cy="35" r="1.5" fill="#1e1e1e"/>
@@ -212,18 +212,18 @@
 														  <text id="largeSideV" x="8" y="13" font-size="12" fill="#FFFFFF" font-family="Vicplate">V</text>
 														  <text id="largeSideI" x="8" y="24" font-size="12" fill="#FFFFFF" font-family="Vicplate">I</text>
 														  <text id="largeSideC" x="8" y="35" font-size="12" fill="#FFFFFF" font-family="Vicplate">C</text>
-														  <text id="largeSideMain" font-size="35" text-anchor="middle" fill="#FFFFFF" font-family="Vicplate"></text>
+														  <text id="largeSideMain" font-size="42" text-anchor="middle" fill="#FFFFFF" font-family="Vicplate"></text>
 														</svg>
 	
 														<!-- Large Bottom -->
 														<svg viewBox="0 0 160 40" id="plate-largeBottom">
-														  <rect id="largeBottomBorder" x="1" y="1" width="158" height="38" rx="5" ry="5" stroke="#000000" stroke-width="2" fill="#0000FF"/>
+														  <rect id="largeBottomBorder" x="1" y="1" width="158" height="38" rx="5" ry="5" stroke="#000000" stroke-width="1" fill="#0000FF"/>
 															<circle class="largeBottomHole largeBottomHole-top" cx="5" cy="5" r="1.5" fill="#1e1e1e"/>
 															<circle class="largeBottomHole largeBottomHole-top" cx="155" cy="5" r="1.5" fill="#1e1e1e"/>
 															<circle class="largeBottomHole largeBottomHole-bottom" cx="5" cy="35" r="1.5" fill="#1e1e1e"/>
 															<circle class="largeBottomHole largeBottomHole-bottom" cx="155" cy="35" r="1.5" fill="#1e1e1e"/>
-														  <text id="largeBottomMain" font-size="42" text-anchor="middle" fill="#FFFFFF" font-family="Vicplate"></text>
-														  <text id="largeBottomBottom" x="90" y="58" font-size="11" text-anchor="middle" fill="#FFFFFF" font-family="Arial">VICTORIA</text>
+														  <text id="largeBottomMain" font-size="30" text-anchor="middle" fill="#FFFFFF" font-family="Vicplate"></text>
+														  <text id="largeBottomBottom" x="80" y="37" font-size="9" text-anchor="middle" fill="#FFFFFF" font-family="Arial">VICTORIA</text>
 														</svg>
 												
 													</div>
@@ -388,12 +388,12 @@ function update() {
   largeSideMain.innerHTML = "";
 
   const charsSide = Array.from(val);
-  const startX = 95 - ((charsSide.length - 1) * 23 / 2);
+  const startX = 98 - ((charsSide.length - 1) * 23 / 2);
 
   charsSide.forEach((ch, index) => {
     const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
-    tspan.setAttribute("x", startX + index * 23);
-    tspan.setAttribute("y", "54");
+    tspan.setAttribute("x", startX + index * 18);
+    tspan.setAttribute("y", "35");
     tspan.textContent = ch;
 
     tspan.setAttribute("fill", color);
@@ -418,12 +418,12 @@ function update() {
   largeBottomMain.innerHTML = "";
 
   const charsBottom = Array.from(val);
-  const startBX = 90 - ((charsBottom.length - 1) * 17 / 2);
+  const startBX = 88 - ((charsBottom.length - 1) * 17 / 2);
 
   charsBottom.forEach((ch, index) => {
     const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
-    tspan.setAttribute("x", startBX + index * 17);
-    tspan.setAttribute("y", "42");
+    tspan.setAttribute("x", startBX + index * 13.5);
+    tspan.setAttribute("y", "28");
     tspan.textContent = ch;
 
     tspan.setAttribute("fill", color);
