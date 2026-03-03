@@ -120,7 +120,7 @@
 											<h5 class="card-title">Plate Style</h5>
 	
 											<div class="form-check form-check-primary form-check-inline">
-												<input class="form-check-input" type="radio" name="style" id="plate-style-lge-std" value="largeBottom">
+												<input class="form-check-input" type="radio" name="style" id="plate-style-lge-std" value="largeBottom" checked>
 												<label class="form-check-label" for="plate-style-lge-std">
 													Standard
 												</label>
@@ -216,32 +216,13 @@
 									    </div>
 									  </div>
 									</div>
-									</div> <!-- end #controls-container -->		
+							        </div>  <!-- end card-body -->
+							      </div>    <!-- end card -->
+							    </div>      <!-- end #controls-container -->
 									<div class="row">
 										<div class="col-12 layout-spacing double-spaced">
 											<div class="plate-wrapper">
-														<!-- Euro Style -->
-														<svg viewBox="0 0 120 50" id="plate-euro">
-														  <rect id="euroBorder" x="1" y="1" width="118" height="48" rx="5" ry="5" stroke="#000000" stroke-width="2" fill="#000000"/>
-															<circle class="euroHole euroHole-top" cx="5" cy="5" r="1.5" fill="#1e1e1e"/>
-															<circle class="euroHole euroHole-top" cx="115" cy="5" r="1.5" fill="#1e1e1e"/>
-															<circle class="euroHole euroHole-bottom" cx="5" cy="45" r="1.5" fill="#1e1e1e"/>
-															<circle class="euroHole euroHole-bottom" cx="115" cy="45" r="1.5" fill="#1e1e1e"/>
-														  <text id="euroTop" x="60" y="11" font-size="8" text-anchor="middle" fill="#FFFFFF" font-family="Arial Narrow">VIC</text>
-														  <text id="euroMain" x="61.5" y="40" text-anchor="middle" fill="#FFFFFF" font-family="FE Mittelschrift" font-size="33">DEFAULT</text>
-														</svg>
-	
-														<!-- Small Plate -->
-														<svg viewBox="0 0 120 50" id="plate-small">
-														  <rect id="smallBorder" x="1" y="1" width="118" height="48" rx="5" ry="5" stroke="#000000" stroke-width="2" fill="#0000FF"/>
-															<circle class="smallHole smallHole-top" cx="5" cy="5" r="1.5" fill="#1e1e1e"/>
-															<circle class="smallHole smallHole-top" cx="115" cy="5" r="1.5" fill="#1e1e1e"/>
-															<circle class="smallHole smallHole-bottom" cx="5" cy="45" r="1.5" fill="#1e1e1e"/>
-															<circle class="smallHole smallHole-bottom" cx="115" cy="45" r="1.5" fill="#1e1e1e"/>
-														  <text id="smallMain" x="61.5" y="31" font-size="28" text-anchor="middle" fill="#FFFFFF" font-family="Vicplate">CUSTOM</text>
-														  <text id="smallBottom" x="60" y="45" font-size="10" text-anchor="middle" fill="#FFFFFF" font-family="Arial"></text>
-														</svg>
-	
+
 														<!-- Large Side -->
 														<svg viewBox="0 0 180 65" id="plate-largeSide">
 														  <rect id="largeSideBorder" x="1" y="1" width="178" height="63" rx="5" ry="5" stroke="#000000" stroke-width="2" fill="#000000"/>
@@ -264,27 +245,6 @@
 															<circle class="largeBottomHole largeBottomHole-bottom" cx="175" cy="60" r="1.5" fill="#1e1e1e"/>
 														  <text id="largeBottomMain" font-size="42" text-anchor="middle" fill="#FFFFFF" font-family="Vicplate"></text>
 														  <text id="largeBottomBottom" x="90" y="58" font-size="11" text-anchor="middle" fill="#FFFFFF" font-family="Arial">VICTORIA</text>
-														</svg>
-												
-														<!-- Large Side (2 Line) -->		
-														<svg viewBox="0 0 180 75" id="plate-largeSide2line">
-	 													 <rect id="largeSide2lineBorder" x="1" y="1" width="178" height="63" rx="5" ry="5" stroke="#000000" stroke-width="2" fill="#000000"/>
-														<circle class="largeSide2lineHole largeSide2lineHole-top" cx="5" cy="5" r="1.5" fill="#1e1e1e"/>
-														<circle class="largeSide2lineHole largeSide2lineHole-top" cx="175" cy="5" r="1.5" fill="#1e1e1e"/>
-														<circle class="largeSide2lineHole largeSide2lineHole-bottom" cx="5" cy="60" r="1.5" fill="#1e1e1e"/>
-														<circle class="largeSide2lineHole largeSide2lineHole-bottom" cx="175" cy="60" r="1.5" fill="#1e1e1e"/>
-
-	
-	 													 <!-- Side letters -->
-	  													 <text id="largeSide2lineV" x="8" y="22" font-size="18" fill="#FFFFFF" font-family="Vicplate">V</text>
-	                                                     <text id="largeSide2lineI" x="8" y="40" font-size="18" fill="#FFFFFF" font-family="Vicplate">I</text>
-	  													 <text id="largeSide2lineC" x="8" y="57" font-size="18" fill="#FFFFFF" font-family="Vicplate">C</text>
-	
-	  													<!-- Main text -->
-	 													 <text id="largeSide2lineMain" font-size="56" text-anchor="middle" fill="#FFFFFF" font-family="Vicplate" x="95" y="50"></text>
-	
-	  													<!-- Smaller bottom line -->
-														 <text id="largeSide2lineBottom" font-size="10" text-anchor="middle" fill="#FFFFFF" font-family="Arial" x="95" y="60"></text>
 														</svg>
 												
 													</div>
@@ -317,7 +277,8 @@
 										</button>
 									</div>
 								</div>
-							</div>                    
+							</div>
+				</div> <!-- end .row layout-top-spacing -->
                     </div>
                     <!-- CONTENT AREA -->
 
@@ -452,163 +413,111 @@
 	}
 
 
-    function update() {
-      const val = mainText.value.toUpperCase();
-      const bottomVal = bottomText.value.toUpperCase();
-      const color = textColor.value;
-      const bg = bgColor.value;
-	const holesMode = document.getElementById("holesMode").value || "corner";
-	const anyHoles = holesMode !== "none";
+function update() {
+  const val = (mainText.value || "").toUpperCase();
+  const bottomVal = (bottomText.value || "").toUpperCase();
+  const color = textColor.value;
+  const bg = bgColor.value;
+
+  const holesMode = document.getElementById("holesMode").value || "none";
+  const anyHoles = holesMode !== "none";
+
+  function applyHoleMode(prefix) {
+    const tops = document.querySelectorAll(`.${prefix}Hole-top`);
+    const bottoms = document.querySelectorAll(`.${prefix}Hole-bottom`);
+    tops.forEach(e => e.style.display = anyHoles ? "block" : "none");
+    bottoms.forEach(e => e.style.display = holesMode === "corner" ? "block" : "none");
+  }
+
+  // Link
+  document.getElementById("output-text").value = buildOutputText();
+
+  // -------- Large Side --------
+  const largeSideMain = document.getElementById("largeSideMain");
+  largeSideMain.innerHTML = "";
+
+  const charsSide = Array.from(val);
+  const startX = 95 - ((charsSide.length - 1) * 23 / 2);
+
+  charsSide.forEach((ch, index) => {
+    const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+    tspan.setAttribute("x", startX + index * 23);
+    tspan.setAttribute("y", "54");
+    tspan.textContent = ch;
+
+    if (ch === "❤️") {
+      tspan.setAttribute("fill", "#C12E1F");
+      tspan.setAttribute("font-family", "Vicplate, Arial, sans-serif");
+    } else {
+      tspan.setAttribute("fill", color);
+    }
+
+    largeSideMain.appendChild(tspan);
+  });
+
+  document.getElementById("largeSideV").setAttribute("fill", color);
+  document.getElementById("largeSideI").setAttribute("fill", color);
+  document.getElementById("largeSideC").setAttribute("fill", color);
+
+  document.getElementById("largeSideBorder").setAttribute("fill", bg);
+  document.getElementById("largeSideBorder").setAttribute("stroke", color);
+
+  const sideLetters = bottomVal.padEnd(3, " ").substring(0, 3).toUpperCase();
+  document.getElementById("largeSideV").textContent = sideLetters.charAt(0);
+  document.getElementById("largeSideI").textContent = sideLetters.charAt(1);
+  document.getElementById("largeSideC").textContent = sideLetters.charAt(2);
+
+  // -------- Large Bottom --------
+  const largeBottomMain = document.getElementById("largeBottomMain");
+  largeBottomMain.innerHTML = "";
+
+  const charsBottom = Array.from(val);
+  const startBX = 90 - ((charsBottom.length - 1) * 17 / 2);
+
+  charsBottom.forEach((ch, index) => {
+    const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+    tspan.setAttribute("x", startBX + index * 17);
+    tspan.setAttribute("y", "42");
+    tspan.textContent = ch;
+
+    if (ch === "❤️") {
+      tspan.setAttribute("fill", "#C12E1F");
+      tspan.setAttribute("font-family", "Vicplate, Arial, sans-serif");
+    } else {
+      tspan.setAttribute("fill", color);
+    }
+
+    largeBottomMain.appendChild(tspan);
+  });
+
+  const bottomLine = document.getElementById("largeBottomBottom");
+  bottomLine.textContent = bottomVal;
+  bottomLine.setAttribute("fill", color);
+
+  document.getElementById("largeBottomBorder").setAttribute("fill", bg);
+  document.getElementById("largeBottomBorder").setAttribute("stroke", color);
+
+  // Holes
+  applyHoleMode("largeSide");
+  applyHoleMode("largeBottom");
+}
+
+
+		
+	function switchStyle() {
+	  const selected =
+	    document.querySelector('input[name="style"]:checked')?.value || 'largeBottom';
 	
-	function applyHoleMode(prefix) {
-	  const tops = document.querySelectorAll(`.${prefix}Hole-top`);
-	  const bottoms = document.querySelectorAll(`.${prefix}Hole-bottom`);
+	  ['largeSide','largeBottom'].forEach(id => {
+	    const el = document.getElementById("plate-" + id);
+	    if (el) el.classList.remove("active");
+	  });
 	
-	  tops.forEach(e => e.style.display = anyHoles ? "block" : "none");
-	  bottoms.forEach(e => e.style.display = holesMode === "corner" ? "block" : "none");
+	  const active = document.getElementById("plate-" + selected);
+	  if (active) active.classList.add("active");
+	
+	  update();
 	}
-		
-	  document.getElementById("output-text").value = buildOutputText();
-
-      document.getElementById("euroMain").textContent = val;
-      document.getElementById("euroTop").textContent = bottomVal || "VIC";
-      document.getElementById("euroMain").setAttribute("fill", color);
-      document.getElementById("euroTop").setAttribute("fill", color);
-      document.getElementById("euroBorder").setAttribute("fill", bg);
-      document.getElementById("euroBorder").setAttribute("stroke", color);
-
-      document.getElementById("smallMain").textContent = val;
-      document.getElementById("smallMain").setAttribute("fill", color);
-      document.getElementById("smallBorder").setAttribute("fill", bg);
-      document.getElementById("smallBorder").setAttribute("stroke", color);
-
-      const smallBottom = document.getElementById("smallBottom");
-      smallBottom.innerHTML = "";
-      for (let char of bottomVal) {
-        const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
-        tspan.setAttribute("dx", "1");
-        tspan.setAttribute("fill", color);
-        tspan.textContent = char;
-        smallBottom.appendChild(tspan);
-      }
-
-	const largeSideMain = document.getElementById("largeSideMain");
-	largeSideMain.innerHTML = "";
-	
-	const charsSide = Array.from(val);
-	const startX = 95 - ((charsSide.length - 1) * 23 / 2);
-	
-	charsSide.forEach((ch, index) => {
-	  const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
-	  tspan.setAttribute("x", startX + index * 23);
-	  tspan.setAttribute("y", "54");
-	  tspan.textContent = ch;
-	
-	  if (ch === "❤️") {
-	    // Always red heart
-	    tspan.setAttribute("fill", "#C12E1F");
-	    // optional: keep Vicplate so shape is consistent
-	    tspan.setAttribute("font-family", "Vicplate, Arial, sans-serif");
-	  } else {
-	    // Normal chars follow selected text colour
-	    tspan.setAttribute("fill", color);
-	  }
-	
-	  largeSideMain.appendChild(tspan);
-	});
-		
-      document.getElementById("largeSideV").setAttribute("fill", color);
-      document.getElementById("largeSideI").setAttribute("fill", color);
-      document.getElementById("largeSideC").setAttribute("fill", color);
-      document.getElementById("largeSideBorder").setAttribute("fill", bg);
-      document.getElementById("largeSideBorder").setAttribute("stroke", color);
-
-      const sideLetters = bottomVal.padEnd(3, " ").substring(0,3).toUpperCase();
-      document.getElementById("largeSideV").textContent = sideLetters.charAt(0);
-      document.getElementById("largeSideI").textContent = sideLetters.charAt(1);
-      document.getElementById("largeSideC").textContent = sideLetters.charAt(2);
-
-	const largeBottomMain = document.getElementById("largeBottomMain");
-	largeBottomMain.innerHTML = "";
-	
-	const charsBottom = Array.from(val);
-	const startBX = 90 - ((charsBottom.length - 1) * 17 / 2);
-	
-	charsBottom.forEach((ch, index) => {
-	  const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
-	  tspan.setAttribute("x", startBX + index * 17);
-	  tspan.setAttribute("y", "42");
-	  tspan.textContent = ch;
-	
-	  if (ch === "❤️") {
-	    tspan.setAttribute("fill", "#C12E1F");      // fixed red
-	    tspan.setAttribute("font-family", "Vicplate, Arial, sans-serif");
-	  } else {
-	    tspan.setAttribute("fill", color);
-	  }
-	
-	  largeBottomMain.appendChild(tspan);
-	});
-	
-      document.getElementById("largeBottomBottom").textContent = bottomVal;
-      document.getElementById("largeBottomBottom").setAttribute("fill", color);
-      document.getElementById("largeBottomBorder").setAttribute("fill", bg);
-      document.getElementById("largeBottomBorder").setAttribute("stroke", color);
-
-	// --- Large Side (2 Line) ---
-	const largeSide2lineMain = document.getElementById("largeSide2lineMain");
-	largeSide2lineMain.innerHTML = "";
-	
-	const charsSide2 = Array.from(val);
-	const startX2 = 95 - ((charsSide2.length - 1) * 23 / 2);
-	
-	charsSide2.forEach((ch, index) => {
-	  const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
-	  tspan.setAttribute("x", startX2 + index * 23);
-	  tspan.setAttribute("y", "48");
-	  tspan.textContent = ch;
-	
-	  if (ch === "❤️") {
-	    tspan.setAttribute("fill", "#C12E1F");
-	    tspan.setAttribute("font-family", "Vicplate, Arial, sans-serif");
-	  } else {
-	    tspan.setAttribute("fill", color);
-	  }
-	
-	  largeSide2lineMain.appendChild(tspan);
-	});
-
-	document.getElementById("largeSide2lineV").setAttribute("fill", color);
-	document.getElementById("largeSide2lineI").setAttribute("fill", color);
-	document.getElementById("largeSide2lineC").setAttribute("fill", color);
-	document.getElementById("largeSide2lineBorder").setAttribute("fill", bg);
-	document.getElementById("largeSide2lineBorder").setAttribute("stroke", color);
-	
-	const sideLetters2 = bottomVal.padEnd(3, " ").substring(0,3).toUpperCase();
-	document.getElementById("largeSide2lineV").textContent = sideLetters2.charAt(0);
-	document.getElementById("largeSide2lineI").textContent = sideLetters2.charAt(1);
-	document.getElementById("largeSide2lineC").textContent = sideLetters2.charAt(2);
-	
-	document.getElementById("largeSide2lineBottom").textContent = bottomVal.substring(3);
-	document.getElementById("largeSide2lineBottom").setAttribute("fill", color);
-
-		applyHoleMode("euro");
-		applyHoleMode("small");
-		applyHoleMode("largeSide");
-		applyHoleMode("largeBottom");
-		applyHoleMode("largeSide2line");
-    }
-
-
-		
-    function switchStyle() {
-      const selected = document.querySelector('input[name="style"]:checked').value;
-      ['euro','small','largeSide','largeBottom','largeSide2line'].forEach(id => {
-        document.getElementById("plate-" + id).classList.remove("active");
-      });
-      document.getElementById("plate-"+selected).classList.add("active");
-      update();
-    }
 
     styles.forEach(r => r.addEventListener("change", switchStyle));
     [mainText, bottomText, textColor, bgColor, holesModeSelect].forEach(input => input.addEventListener("input", update));
@@ -635,7 +544,7 @@ function sendToShopify() {
   const bottomText = document.getElementById("bottomText").value || '';
   const textColor = document.getElementById("textColor").value || '';
   const bgColor = document.getElementById("bgColor").value || '';
-  const holesMode = document.getElementById("holesMode").value || "corner";
+  const holesMode = document.getElementById("holesMode").value || "none";
   let specialLabel = 'None';
 	
 	const textCombined = mainText + bottomText;
