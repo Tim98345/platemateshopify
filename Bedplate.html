@@ -145,17 +145,6 @@
                     </div>
                   </div>
 
-                  <div class="row double-spaced">
-                    <div class="col-md-4 col-sm-12 ms-md-auto">
-                      <label for="holesMode" class="form-label">Hole Style</label>
-                      <select id="holesMode" class="form-select">
-                        <option value="none" selected>No Holes</option>
-                        <option value="top">Top Holes</option>
-                        <option value="corner">Corner Holes</option>
-                      </select>
-                    </div>
-                  </div>
-
                   <div class="row double-spaced align-items-end">
                     <div class="col-md-4 col-sm-12 spaced">
                       <label for="specialChar" class="form-label">Special Character</label>
@@ -184,11 +173,6 @@
                         <!-- Large Side State Only -->
                         <svg viewBox="0 0 180 65" id="plate-largeSide">
                           <rect id="largeSideBorder" x="1" y="1" width="178" height="63" rx="5" ry="5" stroke="#FFFFFF" stroke-width="2" fill="#0086D6"/>
-
-                          <circle class="largeSideHole largeSideHole-top" cx="5" cy="5" r="1.5" fill="#1e1e1e"/>
-                          <circle class="largeSideHole largeSideHole-top" cx="175" cy="5" r="1.5" fill="#1e1e1e"/>
-                          <circle class="largeSideHole largeSideHole-bottom" cx="5" cy="60" r="1.5" fill="#1e1e1e"/>
-                          <circle class="largeSideHole largeSideHole-bottom" cx="175" cy="60" r="1.5" fill="#1e1e1e"/>
 
                           <text id="largeSideV" x="8" y="22" font-size="18" fill="#FFFFFF" font-family="Vicplate">V</text>
                           <text id="largeSideI" x="8" y="40" font-size="18" fill="#FFFFFF" font-family="Vicplate">I</text>
@@ -253,7 +237,6 @@
   <script>
     const textColor = document.getElementById("textColor");
     const bgColor = document.getElementById("bgColor");
-    const holesModeSelect = document.getElementById("holesMode");
     const mainText = document.getElementById("mainText");
     const bottomText = document.getElementById("bottomText");
     const specialSelect = document.getElementById("specialChar");
@@ -290,7 +273,7 @@
       const bottomTextValue = document.getElementById("bottomText").value || "";
       const textColorValue = document.getElementById("textColor").value || "";
       const bgColorValue = document.getElementById("bgColor").value || "";
-      const holesMode = document.getElementById("holesMode").value || "none";
+      const holesMode = "none";
 
       const params = new URLSearchParams({
         style,
@@ -355,15 +338,8 @@
       const bottomVal = bottomText.value.toUpperCase();
       const color = textColor.value;
       const bg = bgColor.value;
-      const holesMode = holesModeSelect.value || "none";
-      const anyHoles = holesMode !== "none";
 
       document.getElementById("output-text").value = buildOutputText();
-
-      const tops = document.querySelectorAll(".largeSideHole-top");
-      const bottoms = document.querySelectorAll(".largeSideHole-bottom");
-      tops.forEach(e => e.style.display = anyHoles ? "block" : "none");
-      bottoms.forEach(e => e.style.display = holesMode === "corner" ? "block" : "none");
 
       const largeSideMain = document.getElementById("largeSideMain");
       largeSideMain.innerHTML = "";
@@ -405,7 +381,7 @@
       const bottomTextValue = document.getElementById("bottomText").value || "";
       const textColorValue = document.getElementById("textColor").value || "";
       const bgColorValue = document.getElementById("bgColor").value || "";
-      const holesMode = document.getElementById("holesMode").value || "none";
+      const holesMode = "none";
       let specialLabel = "None";
 
       const textCombined = mainTextValue + bottomTextValue;
@@ -438,7 +414,7 @@
       }
     }
 
-    [mainText, bottomText, textColor, bgColor, holesModeSelect].forEach(input => {
+    [mainText, bottomText, textColor, bgColor].forEach(input => {
       input.addEventListener("input", update);
       input.addEventListener("change", update);
     });
