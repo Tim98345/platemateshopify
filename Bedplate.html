@@ -348,12 +348,12 @@
       largeSideMain.innerHTML = "";
 
       const charsSide = Array.from(val);
-      const startX = 95 - ((charsSide.length - 1) * 23 / 2);
+      const startX = 140 - ((charsSide.length - 1) * 28 / 2);
 
       charsSide.forEach((ch, index) => {
         const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
         tspan.setAttribute("x", startX + index * 23);
-        tspan.setAttribute("y", "54");
+        tspan.setAttribute("y", "40");
         tspan.textContent = ch;
 
         if (ch === "❤️") {
