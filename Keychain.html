@@ -119,14 +119,14 @@
 										<div class="col-12">
 											<h5 class="card-title">Plate Style</h5>
 											<div class="form-check form-check-primary form-check-inline">
-												<input class="form-check-input" type="radio" name="style" id="plate-style-small-std" value="small">
+												<input class="form-check-input" type="radio" name="style" id="plate-style-small-std" value="keychain-standard">
 												<label class="form-check-label" for="plate-style-small-std">
 													Standard
 												</label>
 											</div>
 	
 											<div class="form-check form-check-primary form-check-inline">
-												<input class="form-check-input" type="radio" name="style" id="plate-style-small-euro" checked="" value="euro">
+												<input class="form-check-input" type="radio" name="style" id="plate-style-small-euro" checked="" value="keychain-euro">
 												<label class="form-check-label" for="plate-style-small-euro">
 													Euro Font
 												</label>
@@ -310,7 +310,7 @@
 	});
 		
 	function buildOutputText() {
-      const style = "Keychain";
+      const style = document.querySelector('input[name="style"]:checked')?.value || "keychain-euro";
 	  const mainText = document.getElementById("mainText").value || '';
 	  const bottomText = document.getElementById("bottomText").value || '';
 	  const textColor = document.getElementById("textColor").value || '';
@@ -411,14 +411,15 @@ function update() {
 
 		
 	function switchStyle() {
-	  const selected = document.querySelector('input[name="style"]:checked')?.value || "euro";
+	  const selected = document.querySelector('input[name="style"]:checked')?.value || "keychain-euro";
 	
 	  ["euro", "small"].forEach(id => {
 	    const el = document.getElementById("plate-" + id);
 	    if (el) el.classList.remove("active");
 	  });
 	
-	  const activePlate = document.getElementById("plate-" + selected);
+	  const svgId = selected === "keychain-standard" ? "small" : "euro";
+	  const activePlate = document.getElementById("plate-" + svgId);
 	  if (activePlate) activePlate.classList.add("active");
 	
 	  update();
@@ -444,7 +445,7 @@ function update() {
 
 function sendToShopify() {
   // Gather all design values exactly the same way your buildOutputText() does
-  const style = "Keychain";
+  const style = document.querySelector('input[name="style"]:checked')?.value || "keychain-euro";
   const mainText = document.getElementById("mainText").value || '';
   const bottomText = document.getElementById("bottomText").value || '';
   const textColor = document.getElementById("textColor").value || '';
