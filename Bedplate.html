@@ -327,13 +327,7 @@
         }
       }
 
-      const holesModeParam = params.get("holes");
-      if (holesModeParam) {
-        const select = document.getElementById("holesMode");
-        if ([...select.options].some(o => o.value === holesModeParam)) {
-          select.value = holesModeParam;
-        }
-      }
+    // Holes removed for Bedplate. Always no holes.
     }
 
     function update() {
@@ -352,7 +346,7 @@
 
       charsSide.forEach((ch, index) => {
         const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
-        tspan.setAttribute("x", startX + index * 23);
+        tspan.setAttribute("x", startX + index * 28);
         tspan.setAttribute("y", "40");
         tspan.textContent = ch;
 
