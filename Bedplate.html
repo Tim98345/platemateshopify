@@ -145,6 +145,17 @@
                     </div>
                   </div>
 
+                  <div class="row double-spaced">
+                    <div class="col-md-4 col-sm-12 ms-md-auto">
+                      <label for="holesMode" class="form-label">Hole Style</label>
+                      <select id="holesMode" class="form-select">
+                        <option value="none" selected>No Holes</option>
+                        <option value="top">Top Holes</option>
+                        <option value="corner">Corner Holes</option>
+                      </select>
+                    </div>
+                  </div>
+                  
                   <div class="row double-spaced align-items-end">
                     <div class="col-md-4 col-sm-12 spaced">
                       <label for="specialChar" class="form-label">Special Character</label>
@@ -172,8 +183,11 @@
                       <div class="plate-wrapper">
                         <!-- Large Side State Only -->
                         <svg viewBox="0 0 255 55" id="plate-largeSide">
-                          <rect id="largeSideBorder"x="1" y="1" width="253" height="53" rx="5" ry="5" stroke="#FFFFFF" stroke-width="2" fill="#0086D6"/>
-                        
+                          <rect id="largeSideBorder" x="1" y="1" width="253" height="53" rx="5" ry="5" stroke="#FFFFFF" stroke-width="2" fill="#0086D6"/>
+                          <circle class="largeSideHole largeSideHole-top" cx="5" cy="5" r="1.5" fill="#1e1e1e"/>
+                          <circle class="largeSideHole largeSideHole-top" cx="250" cy="5" r="1.5" fill="#1e1e1e"/>
+                          <circle class="largeSideHole largeSideHole-bottom" cx="5" cy="50" r="1.5" fill="#1e1e1e"/>
+                          <circle class="largeSideHole largeSideHole-bottom" cx="250" cy="50" r="1.5" fill="#1e1e1e"/>
                           <!-- VIC (scaled tighter vertically) -->
                           <text id="largeSideV" x="10" y="18" font-size="14" fill="#FFFFFF" font-family="Vicplate">V</text>
                           <text id="largeSideI" x="10" y="32" font-size="14" fill="#FFFFFF" font-family="Vicplate">I</text>
@@ -242,6 +256,7 @@
     const bgColor = document.getElementById("bgColor");
     const mainText = document.getElementById("mainText");
     const bottomText = document.getElementById("bottomText");
+    const holesModeSelect = document.getElementById("holesMode");
     const specialSelect = document.getElementById("specialChar");
     const btnAddToMain = document.getElementById("btnAddToMain");
     const btnAddToBottom = document.getElementById("btnAddToBottom");
@@ -276,7 +291,7 @@
       const bottomTextValue = document.getElementById("bottomText").value || "";
       const textColorValue = document.getElementById("textColor").value || "";
       const bgColorValue = document.getElementById("bgColor").value || "";
-      const holesMode = "none";
+      const holesMode = document.getElementById("holesMode").value || "none";
 
       const params = new URLSearchParams({
         style,
@@ -327,7 +342,13 @@
         }
       }
 
-    // Holes removed for Bedplate. Always no holes.
+      const holesModeParam = params.get("holes");
+      if (holesModeParam) {
+        const select = document.getElementById("holesMode");
+        if ([...select.options].some(o => o.value === holesModeParam)) {
+          select.value = holesModeParam;
+        }
+      }
     }
 
     function update() {
@@ -335,7 +356,15 @@
       const bottomVal = bottomText.value.toUpperCase();
       const color = textColor.value;
       const bg = bgColor.value;
-
+      const holesMode = document.getElementById("holesMode").value || "none";
+      const anyHoles = holesMode !== "none";
+      
+      const tops = document.querySelectorAll(".largeSideHole-top");
+      const bottoms = document.querySelectorAll(".largeSideHole-bottom");
+      
+      tops.forEach(e => e.style.display = anyHoles ? "block" : "none");
+      bottoms.forEach(e => e.style.display = holesMode === "corner" ? "block" : "none");
+      
       document.getElementById("output-text").value = buildOutputText();
 
       const largeSideMain = document.getElementById("largeSideMain");
@@ -378,7 +407,7 @@
       const bottomTextValue = document.getElementById("bottomText").value || "";
       const textColorValue = document.getElementById("textColor").value || "";
       const bgColorValue = document.getElementById("bgColor").value || "";
-      const holesMode = "none";
+      const holesMode = document.getElementById("holesMode").value || "none";
       let specialLabel = "None";
 
       const textCombined = mainTextValue + bottomTextValue;
@@ -411,7 +440,7 @@
       }
     }
 
-    [mainText, bottomText, textColor, bgColor].forEach(input => {
+    [mainText, bottomText, textColor, bgColor, holesModeSelect].forEach(input => {
       input.addEventListener("input", update);
       input.addEventListener("change", update);
     });
