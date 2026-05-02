@@ -433,35 +433,32 @@
     }
 
     document.addEventListener("DOMContentLoaded", function() {
-      let isPreview = false;
-    
-      try {
-        const url = new URL(window.location.href);
-        if (url.searchParams.get("preview") === "true") {
-          isPreview = true;
-          document.body.classList.add("preview-mode");
-        }
-      } catch (e) {}
+      const url = new URL(window.location.href);
+      const isPreview = url.searchParams.get("preview") === "true";
     
       if (isPreview) {
+        document.body.classList.add("preview-mode");
+    
         update();
     
-        const svg = document.getElementById("plate-largeSide");
+        const plateWrapper = document.querySelector(".plate-wrapper");
     
-        if (svg) {
-          const clone = svg.cloneNode(true);
+        if (plateWrapper) {
+          const clone = plateWrapper.cloneNode(true);
     
           document.body.innerHTML = "";
           document.body.style.margin = "0";
           document.body.style.padding = "0";
-          document.body.style.background = "transparent";
+          document.body.style.background = "#ffffff";
     
-          clone.style.display = "block";
-          clone.style.width = "100%";
-          clone.style.height = "auto";
-          clone.style.maxWidth = "255px";
+          const outer = document.createElement("div");
+          outer.style.display = "flex";
+          outer.style.alignItems = "center";
+          outer.style.justifyContent = "center";
+          outer.style.height = "100vh";
+          outer.appendChild(clone);
     
-          document.body.appendChild(clone);
+          document.body.appendChild(outer);
         }
     
         return;
