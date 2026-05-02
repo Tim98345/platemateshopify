@@ -139,6 +139,12 @@
 													Side State (2 Line)
 											  </label>
 											</div>
+											<div class="form-check form-check-primary form-check-inline">
+ 											 <input class="form-check-input" type="radio" name="style" id="plate-style-lge-euro" value="largeEuro">
+  											 <label class="form-check-label" for="plate-style-lge-euro">
+    												Euro Font
+ 											 </label>
+											</div>
 										</div>
 									</div>
 									<div class="row">
@@ -293,7 +299,20 @@
 	  													<!-- Smaller bottom line -->
 														 <text id="largeSide2lineBottom" font-size="10" text-anchor="middle" fill="#FFFFFF" font-family="Arial" x="95" y="60"></text>
 														</svg>
-												
+
+														<!-- Large Euro Style -->
+														<svg viewBox="0 0 180 65" id="plate-largeEuro">
+														  <rect id="largeEuroBorder" x="1" y="1" width="178" height="63" rx="5" ry="5" stroke="#000000" stroke-width="2" fill="#000000"/>
+														
+														  <circle class="largeEuroHole largeEuroHole-top" cx="5" cy="5" r="1.5" fill="#1e1e1e"/>
+														  <circle class="largeEuroHole largeEuroHole-top" cx="175" cy="5" r="1.5" fill="#1e1e1e"/>
+														  <circle class="largeEuroHole largeEuroHole-bottom" cx="5" cy="60" r="1.5" fill="#1e1e1e"/>
+														  <circle class="largeEuroHole largeEuroHole-bottom" cx="175" cy="60" r="1.5" fill="#1e1e1e"/>
+														
+														  <text id="largeEuroTop" x="90" y="14" font-size="11" text-anchor="middle" fill="#FFFFFF" font-family="Arial Narrow">VIC</text>
+														
+														  <text id="largeEuroMain" x="90" y="54" text-anchor="middle" fill="#FFFFFF" font-family="FE Mittelschrift" font-size="50">CUSTOM</text>
+														</svg>
 													</div>
 													<div class="col-md-12" style="text-align:center">
 														<p>Preview Only - Plates will be adjusted and resized as required</p>
@@ -489,6 +508,13 @@
       document.getElementById("smallBorder").setAttribute("fill", bg);
       document.getElementById("smallBorder").setAttribute("stroke", color);
 
+	document.getElementById("largeEuroMain").textContent = val;
+	document.getElementById("largeEuroTop").textContent = bottomVal || "VIC";
+	document.getElementById("largeEuroMain").setAttribute("fill", color);
+	document.getElementById("largeEuroTop").setAttribute("fill", color);
+	document.getElementById("largeEuroBorder").setAttribute("fill", bg);
+	document.getElementById("largeEuroBorder").setAttribute("stroke", color);
+		
       const smallBottom = document.getElementById("smallBottom");
       smallBottom.innerHTML = "";
       for (let char of bottomVal) {
@@ -604,13 +630,14 @@
 		applyHoleMode("largeSide");
 		applyHoleMode("largeBottom");
 		applyHoleMode("largeSide2line");
+		applyHoleMode("largeEuro");
     }
 
 
 		
     function switchStyle() {
       const selected = document.querySelector('input[name="style"]:checked').value;
-      ['euro','small','largeSide','largeBottom','largeSide2line'].forEach(id => {
+      ['euro','small','largeSide','largeBottom','largeSide2line','largeEuro'].forEach(id => {
         document.getElementById("plate-" + id).classList.remove("active");
       });
       document.getElementById("plate-"+selected).classList.add("active");
