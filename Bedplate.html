@@ -434,39 +434,39 @@
 
     document.addEventListener("DOMContentLoaded", function() {
       let isPreview = false;
-
+    
       try {
         const url = new URL(window.location.href);
         if (url.searchParams.get("preview") === "true") {
           isPreview = true;
           document.body.classList.add("preview-mode");
         }
-      } catch (e) {
-        // ignore
-      }
-
+      } catch (e) {}
+    
       if (isPreview) {
-        const plateWrapper = document.querySelector(".plate-wrapper");
-        if (plateWrapper) {
-          const clone = plateWrapper.cloneNode(true);
-
+        update();
+    
+        const svg = document.getElementById("plate-largeSide");
+    
+        if (svg) {
+          const clone = svg.cloneNode(true);
+    
           document.body.innerHTML = "";
           document.body.style.margin = "0";
           document.body.style.padding = "0";
-          document.body.style.background = "#ffffff";
-
-          const outer = document.createElement("div");
-          outer.style.display = "flex";
-          outer.style.alignItems = "center";
-          outer.style.justifyContent = "center";
-          outer.style.height = "100vh";
-          outer.appendChild(clone);
-
-          document.body.appendChild(outer);
+          document.body.style.background = "transparent";
+    
+          clone.style.display = "block";
+          clone.style.width = "100%";
+          clone.style.height = "auto";
+          clone.style.maxWidth = "255px";
+    
+          document.body.appendChild(clone);
         }
+    
         return;
       }
-
+    
       const sendBtn = document.getElementById("btnSendToShopify");
       if (sendBtn) {
         sendBtn.addEventListener("click", sendToShopify);
